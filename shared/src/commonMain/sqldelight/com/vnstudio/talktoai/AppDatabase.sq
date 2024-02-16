@@ -1,0 +1,72 @@
+CREATE TABLE Chat (
+    id INTEGER PRIMARY KEY NOT NULL,
+    name TEXT NOT NULL,
+    updated INTEGER NOT NULL,
+    listOrder INTEGER NOT NULL
+);
+
+insertChats:
+INSERT OR REPLACE INTO Chat (id, name, updated, listOrder)
+VALUES (?, ?, ?, ?);
+
+insertChat:
+INSERT OR REPLACE INTO Chat (id, name, updated, listOrder)
+VALUES (?, ?, ?, ?);
+
+deleteChats:
+DELETE FROM Chat WHERE id NOT IN (?);
+
+getChats:
+SELECT * FROM Chat ORDER BY listOrder DESC;
+
+getLastUpdatedChat:
+SELECT * FROM Chat ORDER BY updated DESC LIMIT 1;
+
+getChatById:
+SELECT * FROM Chat WHERE id = ?;
+
+updateChat:
+UPDATE Chat SET name = ?, updated = ?, listOrder = ? WHERE id = ?;
+
+updateChats:
+UPDATE Chat
+SET id = ?, name = ?, updated = ?, listOrder = ?
+WHERE id = ?;
+
+deleteChat:
+DELETE FROM Chat WHERE id = ?;
+
+CREATE TABLE Message (
+    id INTEGER PRIMARY KEY,
+    chatId INTEGER,
+    author TEXT,
+    message TEXT,
+    updatedAt INTEGER,
+    status TEXT,
+    errorMessage TEXT,
+    truncated INTEGER,
+    FOREIGN KEY (chatId) REFERENCES Chat(id)
+);
+
+insertMessages:
+INSERT OR REPLACE INTO Message (id, chatId, author, message, updatedAt, status, errorMessage, truncated)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+
+insertMessage:
+INSERT OR REPLACE INTO Message (id, chatId, author, message, updatedAt, status, errorMessage, truncated)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+
+getMessages:
+SELECT * FROM Message;
+
+getMessagesFromChat:
+SELECT * FROM Message WHERE chatId = ? ORDER BY updatedAt;
+
+deleteMessagesFromChat:
+DELETE FROM Message WHERE chatId = ?;
+
+deleteMessage:
+DELETE FROM Message WHERE id = ?;
+
+deleteMessages:
+DELETE FROM Message WHERE id NOT IN (?);
