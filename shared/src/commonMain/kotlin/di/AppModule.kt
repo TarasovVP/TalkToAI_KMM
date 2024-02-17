@@ -38,9 +38,6 @@ val appModule = module {
         }
     }
     single {
-        DatabaseDriverFactory()
-    }
-    single {
         val sqlDriver = get<DatabaseDriverFactory>().createDriver()
         AppDatabase(sqlDriver)
     }

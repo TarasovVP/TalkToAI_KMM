@@ -26,7 +26,7 @@ class MainActivity : ComponentActivity() {
             messageRepository.insertMessage(Message(id = Date().time + 1,
                 chatId = 1,
                 author = "gpt-3.5-turbo",
-                message = String.EMPTY,
+                message = "Hello, Who are you?",
                 updatedAt = 123456,
                 status = MessageStatus.REQUESTING))
         }
