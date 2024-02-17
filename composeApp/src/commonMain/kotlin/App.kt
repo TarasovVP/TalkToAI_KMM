@@ -12,12 +12,29 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import domain.ApiRequest
+import domain.models.MessageApi
+import domain.repositories.MessageRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-fun App() {
+fun App(messageRepository: MessageRepository? = null, onResult: (String)-> Unit  = {}) {
+    CoroutineScope(Dispatchers.Default).launch {
+        messageRepository?.sendRequest(
+            ApiRequest(
+                model = "gpt-3.5-turbo", temperature = 0.7f, messages = listOf(
+                    MessageApi(role = "user", content = "Hello")
+                )
+            )
+        )?.collect {
+            onResult.invoke(it.toString())
+        }
+    }
     MaterialTheme {
         var showContent by remember { mutableStateOf(false) }
         val greeting = remember { Greeting().greet() }

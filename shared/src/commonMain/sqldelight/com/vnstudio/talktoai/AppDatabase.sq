@@ -1,4 +1,4 @@
-CREATE TABLE Chat (
+CREATE TABLE  IF NOT EXISTS Chat (
     id INTEGER PRIMARY KEY NOT NULL,
     name TEXT NOT NULL,
     updated INTEGER NOT NULL,
@@ -36,7 +36,7 @@ WHERE id = ?;
 deleteChat:
 DELETE FROM Chat WHERE id = ?;
 
-CREATE TABLE Message (
+CREATE TABLE  IF NOT EXISTS Message (
     id INTEGER PRIMARY KEY,
     chatId INTEGER,
     author TEXT,

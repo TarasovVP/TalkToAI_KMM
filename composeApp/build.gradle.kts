@@ -46,9 +46,15 @@ kotlin {
             @OptIn(ExperimentalComposeLibrary::class)
             implementation(compose.components.resources)
             implementation(projects.shared)
+            implementation(libs.koin.core)
+
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
+            implementation(libs.koin.core)
+        }
+        iosMain.dependencies {
+            implementation(libs.koin.core)
         }
     }
 }
