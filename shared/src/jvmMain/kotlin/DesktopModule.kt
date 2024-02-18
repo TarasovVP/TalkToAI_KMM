@@ -5,4 +5,7 @@ val desktopModule = module {
     single {
         DatabaseDriverFactory()
     }
+    single {
+        PlatformMessageDisplayer()
+    }
 }

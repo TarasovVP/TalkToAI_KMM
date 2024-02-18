@@ -1,29 +1,32 @@
 package com.vnteam.talktoai
 
 import App
+import PlatformMessageDisplayer
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.tooling.preview.Preview
+import domain.CommonExtensions.EMPTY
 import domain.repositories.MessageRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
 class MainActivity : ComponentActivity() {
 
     private val messageRepository: MessageRepository by inject()
+    private val platformMessageDisplayer: PlatformMessageDisplayer by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            App(messageRepository) { message ->
-                CoroutineScope(Dispatchers.Main).launch {
-                    Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show()
-                }
+            val messageState: MutableState<String> = remember { mutableStateOf(String.EMPTY) }
+            App(messageRepository, messageState)
+            LaunchedEffect(messageState.value) {
+                if (messageState.value.isNotEmpty()) platformMessageDisplayer.showPopupMessage(messageState.value)
             }
         }
     }
