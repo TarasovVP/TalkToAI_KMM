@@ -1,0 +1,16 @@
+PODS:
+  - AppCocoaPod (1.0)
+
+DEPENDENCIES:
+  - AppCocoaPod (from `../shared`)
+
+EXTERNAL SOURCES:
+  AppCocoaPod:
+    :path: "../shared"
+
+SPEC CHECKSUMS:
+  AppCocoaPod: e0603bfb69b22edbd2a06200286d02edb5c5f7b4
+
+PODFILE CHECKSUM: c7117d1c496b68e66a7eaa8062f5338f6144c517
+
+COCOAPODS: 1.15.2
