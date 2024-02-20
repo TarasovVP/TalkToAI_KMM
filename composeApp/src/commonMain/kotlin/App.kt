@@ -6,8 +6,6 @@ import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,13 +24,15 @@ import org.jetbrains.compose.resources.painterResource
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-fun App(messageRepository: MessageRepository? = null, messageState: MutableState<String>? = null) {
+fun App(messageRepository: MessageRepository? = null, onMessageDisplay: (String) -> Unit = {}) {
 
     MaterialTheme {
         var showContent by remember { mutableStateOf(false) }
         val greeting = remember { Greeting().greet() }
         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-            Button(onClick = { doSomething(messageRepository, messageState) }) {
+            Button(onClick = {
+                doSomething(messageRepository, onMessageDisplay) }
+            ) {
                 Text("Click me!")
             }
             AnimatedVisibility(showContent) {
@@ -45,7 +45,7 @@ fun App(messageRepository: MessageRepository? = null, messageState: MutableState
     }
 }
 
-fun doSomething(messageRepository: MessageRepository? = null, messageState: MutableState<String>? = null) {
+fun doSomething(messageRepository: MessageRepository? = null, onMessageDisplay: (String) -> Unit = {}) {
     CoroutineScope(Dispatchers.Default).launch {
         messageRepository?.sendRequest(
             ApiRequest(
@@ -54,9 +54,11 @@ fun doSomething(messageRepository: MessageRepository? = null, messageState: Muta
                 )
             )
         )?.collect {
-            messageState?.value = it.toString()
+            launch(Dispatchers.Main) {
+                onMessageDisplay.invoke(it.toString())
+            }
         } ?: withContext(Dispatchers.Main) {
-            messageState?.value = "No message repository"
+            onMessageDisplay.invoke("No message repository")
         }
     }
 }

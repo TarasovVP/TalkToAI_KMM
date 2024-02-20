@@ -5,7 +5,13 @@ import platform.UIKit.UIAlertController
 import platform.UIKit.UIAlertControllerStyleAlert
 import platform.UIKit.UIViewController
 
-actual class PlatformMessageDisplayer(private val uiViewController: UIViewController) {
+actual class PlatformMessageDisplayer {
+
+    private var uiViewController: UIViewController? = null
+
+    fun setUIViewController(uiViewController: UIViewController) {
+        this.uiViewController = uiViewController
+    }
 
     actual fun showPopupMessage(message: String) {
         val alertController = UIAlertController.alertControllerWithTitle(
@@ -20,6 +26,6 @@ actual class PlatformMessageDisplayer(private val uiViewController: UIViewContro
                 handler = null
             )
         )
-        uiViewController.presentViewController(alertController, animated = true, completion = null)
+        uiViewController?.presentViewController(alertController, animated = true, completion = null)
     }
 }

@@ -1,12 +1,14 @@
 import UIKit
 import SwiftUI
 import ComposeApp
+import shared
 
 struct ComposeView: UIViewControllerRepresentable {
+    let messageRepository = KoinHelper().getKoin()
     func makeUIViewController(context: Context) -> UIViewController {
-        MainViewControllerKt.MainViewController()
+        MainViewControllerKt.MainViewController(anyObject: messageRepository)
     }
-
+    
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
 }
 
