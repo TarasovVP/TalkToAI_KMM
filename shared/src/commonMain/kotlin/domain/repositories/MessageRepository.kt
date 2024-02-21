@@ -1,5 +1,6 @@
 package domain.repositories
 
+import TestClass
 import data.database.db_entities.Message
 import domain.ApiRequest
 import domain.ApiResponse
@@ -25,4 +26,6 @@ interface MessageRepository {
     suspend fun updateMessages(messages: List<Message>)
 
     suspend fun sendRequest(apiRequest: ApiRequest): Flow<Result<ApiResponse>>
+
+    fun getTest(): TestClass
 }

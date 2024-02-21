@@ -1,5 +1,6 @@
 package data.repositoryimpls
 
+import TestClass
 import data.database.dao.MessageDao
 import data.database.db_entities.Message
 import data.network.ApiService
@@ -43,4 +44,6 @@ class MessageRepositoryImpl(
         val httpResponse = apiService.sendRequest(apiRequest)
         emit(httpResponse.handleResponse<ApiResponse>())
     }.flowOn(Dispatchers.IO)
+
+    override fun getTest() = TestClass()
 }

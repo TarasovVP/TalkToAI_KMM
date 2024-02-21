@@ -11,11 +11,12 @@ fun MainViewController(anyObject: Any): UIViewController {
     val messageState: MutableState<String> = remember { mutableStateOf("") }*/
     val platformMessageDisplayer = PlatformMessageDisplayer()
     var onMessageDisplay: (String) -> Unit = {}
-    val messageRepository = anyObject as Koin
+
     val viewController = ComposeUIViewController {
         /*if (messageRepositoryComponent == null) {
             error = "MessageRepositoryComponent is null"
-        } else {
+        } else {  `
+
             val messageRepository = messageRepositoryComponent.messageRepository()
             if (messageRepository == null) {
                 error = "MessageRepository is null"
@@ -28,14 +29,21 @@ fun MainViewController(anyObject: Any): UIViewController {
     platformMessageDisplayer.setUIViewController(viewController)
 
     onMessageDisplay = { message ->
-        var error = messageRepository.toString()
+        var error = ""
+        try {
+            val messageRepository = anyObject as MessageRepositoryImpl
+            error = messageRepository.toString()
+        } catch (e: Exception) {
+            error = e.message.toString()
+        }
+        platformMessageDisplayer.showPopupMessage(anyObject.toString())
         /*try {
             val messageRepositoryComponent = KoinHelper().getMessageRepository()
             error = messageRepositoryComponent.toString()
         } catch (e: Exception) {
             error = e.message.toString()
         }*/
-        platformMessageDisplayer.showPopupMessage(error)
+
         //if (message.isNotEmpty()) platformMessageDisplayer.showPopupMessage(message)
     }
     /*platformMessageDisplayer.setUIViewController(viewController)
