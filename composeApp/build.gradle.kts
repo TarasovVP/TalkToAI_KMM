@@ -47,6 +47,7 @@ kotlin {
             implementation(compose.components.resources)
             implementation(projects.shared)
             implementation(libs.koin.core)
+            implementation("io.insert-koin:koin-compose:1.1.2")
 
         }
         desktopMain.dependencies {

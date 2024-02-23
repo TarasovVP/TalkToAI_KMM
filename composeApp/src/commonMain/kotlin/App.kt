@@ -16,22 +16,24 @@ import domain.ApiRequest
 import domain.models.MessageApi
 import domain.repositories.MessageRepository
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import org.koin.compose.koinInject
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-fun App(messageRepository: MessageRepository? = null, onMessageDisplay: (String) -> Unit = {}) {
+fun App(messageRepository: MessageRepository = koinInject(), onMessageDisplay: (String) -> Unit = {}) {
+
+    val platformCoroutineDispatcher = PlatformCoroutineDispatcher()
 
     MaterialTheme {
         var showContent by remember { mutableStateOf(false) }
         val greeting = remember { Greeting().greet() }
         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
             Button(onClick = {
-                doSomething(messageRepository, onMessageDisplay) }
+                doSomething(messageRepository, platformCoroutineDispatcher, onMessageDisplay) }
             ) {
                 Text("Click me!")
             }
@@ -45,8 +47,12 @@ fun App(messageRepository: MessageRepository? = null, onMessageDisplay: (String)
     }
 }
 
-fun doSomething(messageRepository: MessageRepository? = null, onMessageDisplay: (String) -> Unit = {}) {
-    CoroutineScope(Dispatchers.Default).launch {
+fun doSomething(
+    messageRepository: MessageRepository? = null,
+    platformCoroutineDispatcher: PlatformCoroutineDispatcher,
+    onMessageDisplay: (String) -> Unit = {}
+) {
+    CoroutineScope(platformCoroutineDispatcher.io).launch {
         messageRepository?.sendRequest(
             ApiRequest(
                 model = "gpt-3.5-turbo", temperature = 0.7f, messages = listOf(
@@ -54,10 +60,10 @@ fun doSomething(messageRepository: MessageRepository? = null, onMessageDisplay: 
                 )
             )
         )?.collect {
-            launch(Dispatchers.Main) {
+            launch(platformCoroutineDispatcher.main) {
                 onMessageDisplay.invoke(it.toString())
             }
-        } ?: withContext(Dispatchers.Main) {
+        } ?: withContext(platformCoroutineDispatcher.main) {
             onMessageDisplay.invoke("No message repository")
         }
     }

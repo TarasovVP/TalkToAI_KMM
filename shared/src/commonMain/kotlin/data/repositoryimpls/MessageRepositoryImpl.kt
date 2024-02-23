@@ -1,6 +1,5 @@
 package data.repositoryimpls
 
-import TestClass
 import data.database.dao.MessageDao
 import data.database.db_entities.Message
 import data.network.ApiService
@@ -9,6 +8,7 @@ import domain.ApiResponse
 import domain.repositories.MessageRepository
 import domain.CommonExtensions.handleResponse
 import domain.CommonExtensions.orZero
+import domain.TestClass
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
@@ -45,5 +45,9 @@ class MessageRepositoryImpl(
         emit(httpResponse.handleResponse<ApiResponse>())
     }.flowOn(Dispatchers.IO)
 
-    override fun getTest() = TestClass()
+    override fun getTest(): TestClass {
+        val testClass = TestClass()
+        testClass.testValue = "Test Value from MessageRepositoryImpl"
+        return testClass
+    }
 }

@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.plugin.mpp.BitcodeEmbeddingMode
 import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
 
@@ -43,6 +44,16 @@ kotlin {
         xcodeConfigurationToNativeBuildType["CUSTOM_DEBUG"] = NativeBuildType.DEBUG
         xcodeConfigurationToNativeBuildType["CUSTOM_RELEASE"] = NativeBuildType.RELEASE
     }
+
+    targets.withType<org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget> {
+        binaries.withType<org.jetbrains.kotlin.gradle.plugin.mpp.Framework> {
+            @OptIn(ExperimentalKotlinGradlePluginApi::class)
+            transitiveExport = true
+            compilations.all {
+                kotlinOptions.freeCompilerArgs += arrayOf("-linker-options", "-lsqlite3")
+            }
+        }
+    }
     
     jvm()
     
@@ -56,6 +67,7 @@ kotlin {
             implementation("com.squareup.sqldelight:runtime:$sqlDelightVersion")
             implementation("com.squareup.sqldelight:coroutines-extensions:$sqlDelightVersion")
             implementation("io.insert-koin:koin-core:$koinVersion")
+            implementation("io.insert-koin:koin-compose:1.1.2")
             implementation("io.insert-koin:koin-test:$koinVersion")
         }
         androidMain.dependencies {
