@@ -1,12 +1,10 @@
 import androidx.compose.ui.window.ComposeUIViewController
-import data.repositoryimpls.MessageRepositoryImpl
-import domain.TestClass
 import domain.repositories.MessageRepository
 import org.koin.core.Koin
-import org.koin.core.component.getScopeName
+import org.koin.dsl.koinApplication
 import platform.UIKit.UIViewController
 
-fun MainViewController(): UIViewController {
+fun MainViewController(obj: Any): UIViewController {
 
     val platformMessageDisplayer = PlatformMessageDisplayer()
     var onMessageDisplay: (String) -> Unit = {}
@@ -17,7 +15,19 @@ fun MainViewController(): UIViewController {
     platformMessageDisplayer.setUIViewController(viewController)
 
     onMessageDisplay = { message ->
-        platformMessageDisplayer.showPopupMessage(message)
+        /*val koin = try {
+            println("MainViewController koinApplication initialized")
+            koinApplication().koin.getAll<Any>()
+        } catch (e: Exception) {
+            println("MainViewController koinApplication ${e.message}")
+            null
+        }*/
+        val koin = try {
+            obj as Koin
+        } catch (e: Exception) {
+            e.message
+        }
+        platformMessageDisplayer.showPopupMessage("isKoinInitialized: obj as Koin $koin")
     }
     return viewController
 }

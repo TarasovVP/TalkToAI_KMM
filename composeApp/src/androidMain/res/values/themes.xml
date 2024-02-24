@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.TalkToAI" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:statusBarColor">@color/primary_800</item>
+        <item name="android:windowBackground">@drawable/bg_splash</item>
+    </style>
+</resources>

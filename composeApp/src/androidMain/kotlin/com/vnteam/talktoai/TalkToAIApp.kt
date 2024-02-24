@@ -7,8 +7,13 @@ import org.koin.core.context.startKoin
 
 class TalkToAIApp : Application() {
 
+    var isNetworkAvailable: Boolean? = null
+
     override fun onCreate() {
         super.onCreate()
+        registerForNetworkUpdates { isAvailable ->
+            isNetworkAvailable = isAvailable
+        }
         startKoin {
             androidContext(this@TalkToAIApp)
             modules(appModule + androidModule)

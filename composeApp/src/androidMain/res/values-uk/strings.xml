@@ -1,0 +1,95 @@
+<resources>
+    <string name="app_name">Talk to AI</string>
+    <string name="app_id">ca-app-pub-8778007212154570~5099361664</string>
+
+    <!--App-->
+    <string name="app_exit">Ви хочете вийти з програми?</string>
+    <string name="app_network_unavailable_repeat">Інтернет з\'єднання відсутнє.\nДля продовження, підключіть інтернет і повторіть дію.</string>
+    <!--Buttons-->
+    <string name="button_next">Далі</string>
+    <string name="button_accept">Дозволити</string>
+    <string name="button_cancel">Скасувати</string>
+    <string name="button_ok">OK</string>
+    <string name="button_close">Закрити</string>
+    <!--Onboarding-->
+    <string name="onboarding_intro"><![CDATA[Привіт! Я – Smart Blocker. Я буду вашим помічником у блокуванні небажаних дзвінків і в цьому мені допоможуть мої розумні фільтри.]]></string>
+    <string name="onboarding_filter_conditions"><![CDATA[Розумні фільтри будуть аналізувати вхідні дзвінки за заданими Вами ознаками та блокувати або дозволяти їх.]]></string>
+    <string name="onboarding_info"><![CDATA[Я завжди готовий допомогти розібратися в тому, як я працюю. Для цього знайдіть іконку <img src =\'ic_info\'> і по ній перейдіть на екран з інструкцією.]]></string>
+    <string name="onboarding_permissions"><![CDATA[Для коректної роботи телефон запросить необхідні дозволи. Для цього виберіть "Дозволити" у системних вікнах.]]></string>
+    <!--Authorization-->
+    <string name="authorization_entrance">Вхід</string>
+    <string name="authorization_with_google_account">За допомогою Google</string>
+    <string name="authorization_enter">Увійти</string>
+    <string name="authorization_or">Або</string>
+    <string name="authorization_login_with_google_description">Або увійти за допомогою Google</string>
+    <string name="authorization_or_without_account_description">Або увійти без авторизації</string>
+    <string name="authorization_or_with_email_password_description">Або з Email та паролем</string>
+    <string name="authorization_email">Email</string>
+    <string name="authorization_password">Пароль</string>
+    <string name="authorization_sign_up">Реєстрація</string>
+    <string name="authorization_sign_up_with_google_description">Реєстрація за допомогою Google</string>
+    <string name="authorization_forgot_password">Забули пароль?</string>
+    <string name="authorization_continue_without_account">Без авторизації</string>
+    <string name="authorization_forgot_password_title">Введіть ваш Email і ми відправимо Вам інструкції.</string>
+    <string name="authorization_enter_email">Введіть ваш Email</string>
+    <string name="authorization_password_reset_success">Лист надіслано на ваш Email. Перевірте у вхідних.</string>
+    <string name="authorization_sign_up_title">Ще немає облікового запису?&#160;</string>
+    <string name="authorization_entrance_title">Є обліковий запис?&#160;</string>
+    <string name="authorization_signing_up">Зареєструватися</string>
+    <string name="authorization_account_not_exist">Користувача з електронною поштою не існує. Спочатку необхідно створити обліковий запис. Перейти на екран реєстрації?</string>
+    <string name="authorization_account_exist">Користувач із таким Email вже існує. Потрібно авторизуватися. Перейти на екран логіну?</string>
+    <string name="authorization_unauthorized_enter">У неавторизованого користувача дані зберігаються локально у межах однієї сесії. Все одно увійти?</string>
+    <string name="authorization_unauthorized_enter_button">Увійти</string>
+    <string name="authorization_network_unavailable">Інтернет з\'єднання відсутнє.\nДля продовження, підключіть інтернет і здійсніть повторний вхід.</string>
+    <!--Empty state-->
+    <string name="empty_state_blockers">Список блокувальників порожній</string>
+    <!--Settings screens-->
+    <string name="settings">Налаштування</string>
+    <string name="settings_chat">Налаштування чату</string>
+    <string name="settings_account">Ваш обліковий запис</string>
+    <string name="settings_language">Мова</string>
+    <string name="settings_theme">Вибір теми</string>
+    <string name="settings_feedback">Написати розробнику</string>
+    <string name="settings_privacy_policy">Політика конфіденційності</string>
+    <!--Settings blocker-->
+
+    <!--Settings account-->
+    <string name="settings_account_log_out_title">Вийти</string>
+    <string name="settings_account_unauthorised_log_out_title">Вийти</string>
+    <string name="settings_account_unauthorised">Неавторизований</string>
+    <string name="settings_account_change_password_title">Змінити пароль</string>
+    <string name="settings_account_delete_title">Видалити обліковий запис</string>
+    <string name="settings_account_enter_current_password">Поточний пароль</string>
+    <string name="settings_account_enter_new_password">Новий пароль</string>
+    <string name="settings_account_change_password_succeed">Пароль успішно змінено</string>
+    <string name="settings_account_log_out">Ви дійсно хочете розлогинитися?</string>
+    <string name="settings_account_unauthorised_log_out">При виході з неавторизованого облікового запису ви втратите всі створені дані. Для збереження зареєструйтеся. Все одно вийти?</string>
+    <string name="settings_account_email_delete">Обліковий запис і всі створені дані будуть видалені безповоротно. Щоб продовжити, введіть поточний пароль.</string>
+    <string name="settings_account_google_delete">Обліковий запис і всі створені дані будуть видалені безповоротно. Щоб продовжити, Google може запросити підтвердження авторизації.</string>
+    <string name="settings_account_transfer_data_title">Перенести дані?</string>
+    <string name="settings_account_transfer_data_turn_on">Створені дані будуть перенесені до вашого облікового запису.</string>
+    <string name="settings_account_transfer_data_turn_off">Створені дані будуть видалені.</string>
+    <string name="settings_account_exist">Користувач із таким Email вже існує. Ви можете перейти до цього облікового запису. При включеному виборі перенесення даних - вони будуть перенесені в обліковий запис, при вимкненому - видалені безоплатно. Перейти?</string>
+    <string name="empty_state_account">Ваші дані зберігаються локально в рамках однієї сесії і будуть втрачені при виході з цього облікового запису, очищення кеша або перевстановленні програми. Щоб підключити віддалене зберігання даних та отримати доступ до нього з будь-якого пристрою, зареєструйтесь.</string>
+    <!--Settings language-->
+    <string name="settings_language_russian">Російська</string>
+    <string name="settings_language_ukrainian">Українська</string>
+    <string name="settings_language_english">Англійська</string>
+    <!--Settings theme-->
+    <string name="settings_theme_day">Світла</string>
+    <string name="settings_theme_night">Темна</string>
+    <string name="settings_theme_auto">Згідно з налаштуваннями телефону</string>
+    <!--Settings feedback-->
+    <string name="settings_feedback_title">Якщо у вас є пропозиції або зауваження, ви можете їх описати нижче</string>
+    <string name="settings_feedback_hint">Повідомлення</string>
+    <string name="settings_feedback_send_button">Надіслати</string>
+    <string name="settings_feedback_send_success">Повідомлення успішно надіслано!</string>
+    <!--Settings privacy-->
+    <string name="privacy_policy" formatted="false"><![CDATA[<html><head><meta charset=\'utf–8\'><meta name=\'viewport\' content=\'width=device–width\'><title>Privacy Policy</title><style>body {font–family: \'Helvetica Neue\', Helvetica, Arial, sans–serif;padding: 1em;}</style></head><body><strong>Privacy Policy</strong><p> Tarasov Volodymyr built the SmartBlocker app as a Commercial app. This SERVICE is provided by Tarasov Volodymyr and is intended for use as is. </p><p> This page is used to inform visitors regarding my policies with the collection, use, and disclosure of Personal Information if anyone decided to use my Service. </p><p> If you choose to use my Service, then you agree to the collection and use of information in relation to this policy. The Personal Information that I collect is used for providing and improving the Service. I will not use or share your information with anyone except as described in this Privacy Policy. </p><p> The terms used in this Privacy Policy have the same meanings as in our Terms and Conditions, which are accessible at SmartBlocker unless otherwise defined in this Privacy Policy. </p><p><strong>Information Collection and Use</strong></p><p> For a better experience, while using our Service, I may require you to provide us with certain personally identifiable information. The information that I request will be retained on your device and is not collected by me in any way. </p><div><p> The app does use third–party services that may collect information used to identify you. </p><p> Link to the privacy policy of third–party service providers used by the app </p><ul><li><a href="https://www.google.com/policies/privacy/" target="_blank" rel="noopener noreferrer">Google Play Services</a></li><li><a href="AdMob policies and restrictions – Google AdMob Help target=" _blank" rel="noopener noreferrer">AdMob</a></li><li><a href="https://firebase.google.com/policies/analytics" target="_blank" rel="noopener noreferrer">Google Analytics for Firebase</a> </li><li><a href="Firebase Support target=" _blank" rel="noopener noreferrer">Firebase Crashlytics</a></li></ul></div><p><strong>Log Data</strong></p><p> I want to inform you that whenever you use my Service, in a case of an error in the app I collect data and information (through third–party products) on your phone called Log Data. This Log Data may include information such as your device Internet Protocol (“IP”) address, device name, operating system version, the configuration of the app when utilizing my Service, the time and date of your use of the Service, and other statistics. </p><p><strong>Cookies</strong></p><p> Cookies are files with a small amount of data that are commonly used as anonymous unique identifiers. These are sent to your browser from the websites that you visit and are stored on your device\'s internal memory. </p><p> This Service does not use these “cookies” explicitly. However, the app may use third\–party code and libraries that use “cookies” to collect information and improve their services. You have the option to either accept or refuse these cookies and know when a cookie is being sent to your device. If you choose to refuse our cookies, you may not be able to use some portions of this Service. </p><p><strong>Service Providers</strong></p><p> I may employ third\–party companies and individuals due to the following reasons: </p><ul><li>To facilitate our Service;</li><li>To provide the Service on our behalf;</li><li>To perform Service–related services; or</li><li>To assist us in analyzing how our Service is used.</li></ul><p> I want to inform users of this Service that these third parties have access to their Personal Information. The reason is to perform the tasks assigned to them on our behalf. However, they are obligated not to disclose or use the information for any other purpose. </p><p><strong>Security</strong></p><p> I value your trust in providing us your Personal Information, thus we are striving to use commercially acceptable means of protecting it. But remember that no method of transmission over the internet, or method of electronic storage is 100% secure and reliable, and I cannot guarantee its absolute security. </p><p><strong>Links to Other Sites</strong></p><p> This Service may contain links to other sites. If you click on a third–party link, you will be directed to that site. Note that these external sites are not operated by me. Therefore, I strongly advise you to review the Privacy Policy of these websites. I have no control over and assume no responsibility for the content, privacy policies, or practices of any third–party sites or services. </p><p><strong>Children\’s Privacy</strong></p><div><p> These Services do not address anyone under the age of 13. I do not knowingly collect personally identifiable information from children under 13 years of age. In the case I discover that a child under 13 has provided me with personal information, I immediately delete this from our servers. If you are a parent or guardian and you are aware that your child has provided us with personal information, please contact me so that I will be able to do the necessary actions. </p></div><p><strong>Changes to This Privacy Policy</strong></p><p> I may update our Privacy Policy from time to time. Thus, you are advised to review this page periodically for any changes. I will notify you of any changes by posting the new Privacy Policy on this page. </p><p>This policy is effective as of 2023–01–04</p><p><strong>Contact Us</strong></p><p> If you have any questions or suggestions about my Privacy Policy, do not hesitate to contact me at blockersmart2022@gmail.com. </p></body></html>]]></string>
+    <!--Menu item-->
+    <string name="menu_info">Інфо</string>
+    <string name="menu_delete">Видалити</string>
+    <string name="menu_search">Пошук</string>
+    <string name="error_message">Сталася помилка</string>
+
+</resources>

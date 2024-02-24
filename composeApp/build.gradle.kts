@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.serialization)
 }
 
 kotlin {
@@ -37,6 +38,13 @@ kotlin {
             implementation(libs.androidx.activity.compose)
             implementation(libs.koin.android)
             implementation(libs.koin.android.compose)
+            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+            implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+            implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.2")
+            implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
+            implementation("androidx.compose.runtime:runtime-livedata:1.6.1")
+            implementation("androidx.compose.ui:ui:1.6.1")
+            implementation("com.google.accompanist:accompanist-insets:0.10.0")
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -48,7 +56,6 @@ kotlin {
             implementation(projects.shared)
             implementation(libs.koin.core)
             implementation("io.insert-koin:koin-compose:1.1.2")
-
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)

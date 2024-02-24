@@ -24,7 +24,9 @@ import org.koin.compose.koinInject
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-fun App(messageRepository: MessageRepository = koinInject(), onMessageDisplay: (String) -> Unit = {}) {
+fun App(isKoinInitialized: Boolean = true, onMessageDisplay: (String) -> Unit = {}) {
+
+    //val messageRepository: MessageRepository = koinInject()
 
     val platformCoroutineDispatcher = PlatformCoroutineDispatcher()
 
@@ -33,7 +35,9 @@ fun App(messageRepository: MessageRepository = koinInject(), onMessageDisplay: (
         val greeting = remember { Greeting().greet() }
         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
             Button(onClick = {
-                doSomething(messageRepository, platformCoroutineDispatcher, onMessageDisplay) }
+                onMessageDisplay.invoke("Button clicked")
+                //doSomething(messageRepository, platformCoroutineDispatcher, onMessageDisplay)
+            }
             ) {
                 Text("Click me!")
             }

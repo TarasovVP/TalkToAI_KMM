@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.sqldelight)
     alias(libs.plugins.serialization)
+    alias(libs.plugins.jetbrainsCompose)
     kotlin("native.cocoapods")
 }
 
@@ -69,6 +70,8 @@ kotlin {
             implementation("io.insert-koin:koin-core:$koinVersion")
             implementation("io.insert-koin:koin-compose:1.1.2")
             implementation("io.insert-koin:koin-test:$koinVersion")
+            @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
+            implementation(compose.components.resources)
         }
         androidMain.dependencies {
             implementation("io.ktor:ktor-client-android:$ktorVersion")
