@@ -1,5 +1,6 @@
 package components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -15,11 +16,14 @@ import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.jetbrains.compose.resources.ExperimentalResourceApi
 import theme.Blue
 import theme.Neutral400
 import theme.Neutral50
@@ -92,6 +96,7 @@ fun SubmitButtons(
     }
 }
 
+@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun GoogleButton(title: String, modifier: Modifier, onClick: () -> Unit) {
     Row(modifier = modifier
@@ -138,20 +143,19 @@ fun LinkButton(
 }
 
 @Composable
-fun TextIconButton(text: String, icon: Int, modifier: Modifier, onClick: () -> Unit) {
+fun TextIconButton(text: String, icon: Painter, modifier: Modifier, onClick: () -> Unit) {
     IconButton(onClick = onClick) {
         Row(
             modifier = modifier
                 .fillMaxWidth()
                 .background(color = Primary700, shape = RoundedCornerShape(16.dp))
         ) {
-            //TODO uncomment
-            /*Image(
-                imageVector = ImageVector.vectorResource(id = icon),
+            Image(
+                painter = icon,
                 contentDescription = "Add chat button",
                 modifier = Modifier
                     .padding(8.dp)
-            )*/
+            )
             Text(
                 text = text,
                 fontSize = 16.sp,

@@ -1,4 +1,4 @@
-package com.vnteam.talktoai.ui_models
+package ui_models
 
 import androidx.compose.runtime.mutableStateOf
 import domain.CommonExtensions.EMPTY

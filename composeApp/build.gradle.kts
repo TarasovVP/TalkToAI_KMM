@@ -60,6 +60,7 @@ kotlin {
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.koin.core)
+            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
         }
         iosMain.dependencies {
             implementation(libs.koin.core)

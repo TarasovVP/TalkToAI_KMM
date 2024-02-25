@@ -4,7 +4,7 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.vnteam.talktoai.base.BaseViewModel
-import com.vnteam.talktoai.mapperimpls.MessageUIMapper
+import mapperimpls.MessageUIMapper
 import com.vnteam.talktoai.ui_models.MessageUIModel
 import domain.sealed_classes.Result
 import data.database.db_entities.Chat

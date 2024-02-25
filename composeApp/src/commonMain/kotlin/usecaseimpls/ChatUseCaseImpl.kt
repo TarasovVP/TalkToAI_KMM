@@ -1,6 +1,5 @@
-package com.vnteam.talktoai.chat
+package usecaseimpls
 
-import com.vnteam.talktoai.mapperimpls.MessageUIMapper
 import data.database.db_entities.Chat
 import data.database.db_entities.Message
 import domain.ApiRequest

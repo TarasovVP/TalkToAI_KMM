@@ -1,10 +1,9 @@
-package com.vnteam.talktoai.mapperimpls
+package mapperimpls
 
-import com.vnteam.talktoai.ui_models.MessageUIModel
 import data.database.db_entities.Message
 import domain.CommonExtensions.orZero
 import domain.enums.MessageStatus
-import mapperimpls.MessageUIMapper
+import ui_models.MessageUIModel
 
 class MessageUIMapperImpl : MessageUIMapper {
 

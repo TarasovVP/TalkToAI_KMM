@@ -1,4 +1,5 @@
-import di.appModule
+package di
+
 import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
 

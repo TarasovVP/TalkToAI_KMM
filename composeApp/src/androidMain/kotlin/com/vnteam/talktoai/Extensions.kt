@@ -7,8 +7,8 @@ import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
 import android.util.Log
-import com.vnteam.talktoai.ui_models.MessageUIModel
 import domain.CommonExtensions.isTrue
+import ui_models.MessageUIModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale

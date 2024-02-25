@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.vnteam.talktoai.R
 import com.vnteam.talktoai.isNetworkAvailable
 import kotlinx.coroutines.*
 
@@ -25,8 +26,7 @@ open class BaseViewModel(private val application: Application) : AndroidViewMode
         if (application.isNetworkAvailable()) {
             networkAvailableResult.invoke()
         } else {
-            //TODO string resource
-            exceptionLiveData.postValue("Network unavailable")
+            exceptionLiveData.postValue(application.getString(R.string.app_network_unavailable_repeat))
         }
     }
 
