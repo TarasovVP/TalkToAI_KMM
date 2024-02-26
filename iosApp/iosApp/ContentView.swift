@@ -2,37 +2,20 @@ import UIKit
 import SwiftUI
 import ComposeApp
 import shared
-import Combine
 
 struct ComposeView: UIViewControllerRepresentable {
-   
-    init() {
-        getMessages()
-    }
     
-    
-    var cancellables = Set<AnyCancellable>()
-
-    func fetchMessages() {
-        let repository = KoinHelper().getMessageRepository()
-        repository.getMessages()
-            .asPublisher() // Преобразование Flow в Publisher
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { completion in
-                switch completion {
-                case .finished:
-                    break
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            }, receiveValue: { messages in
-                print(messages)
-            })
-            .store(in: &cancellables)
-    }
+    let chatViewModel: ChatViewModel? = {
+        do {
+            return try KoinHelper().getChatViewModel()
+        } catch {
+            print(error)
+            return nil
+        }
+    }()
     
     func makeUIViewController(context: Context) -> UIViewController {
-        MainViewControllerKt.MainViewController(obj: Any.self)
+        MainViewControllerKt.MainViewController(viewModel: chatViewModel)
     }
     
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}

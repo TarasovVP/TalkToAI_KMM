@@ -47,6 +47,7 @@ kotlin {
             implementation("com.google.accompanist:accompanist-insets:0.10.0")
         }
         commonMain.dependencies {
+            implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.5.0")
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)
@@ -61,6 +62,8 @@ kotlin {
             implementation(compose.desktop.currentOs)
             implementation(libs.koin.core)
             implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+            implementation("org.apache.logging.log4j:log4j-slf4j-impl:2.13.3")
+            implementation("org.apache.logging.log4j:log4j-api:2.13.3")
         }
         iosMain.dependencies {
             implementation(libs.koin.core)

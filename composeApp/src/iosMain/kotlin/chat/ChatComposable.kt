@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -37,6 +36,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import clearCheckToAction
@@ -63,28 +63,27 @@ import domain.sealed_classes.MessageAction
 import isDefineSecondsLater
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.datetime.Clock
-import org.koin.compose.koinInject
 import resources.LocalAvatarSize
 import resources.LocalDefaultTextSize
 import resources.LocalLargePadding
 import resources.LocalSmallPadding
 import resources.StringResources
+import resources.getStringResourcesByLocale
 import textToAction
 import theme.Neutral50
 import theme.Primary500
 import theme.Primary600
 import theme.Primary900
-import java.util.Date
 
 @Composable
 fun ChatScreen(
-    currentChatId: Long,
-    isMessageActionModeState: MutableState<Boolean?>,
-    infoMessageState: MutableState<InfoMessage?>,
-    progressVisibilityState: MutableState<Boolean>,
-    stringResource: StringResources,
+    viewModel: ChatViewModel,
+    onMessageDisplay: (String) -> Unit = {}
 ) {
-    val viewModel: ChatViewModel = koinInject()
+    val isMessageActionModeState = remember { mutableStateOf<Boolean?>(null) }
+    val infoMessageState = remember { mutableStateOf<InfoMessage?>(null) }
+    val progressVisibilityState = remember { mutableStateOf(false) }
+    val stringResource = getStringResourcesByLocale(Locale.current.language)
     val showCreateChatDialog: MutableState<Boolean> = remember { mutableStateOf(false) }
     val currentChatState = viewModel.currentChatStateFlow
     val messagesState = viewModel.messagesStateFlow
@@ -92,8 +91,9 @@ fun ChatScreen(
         rememberSaveable { mutableStateOf(MessageAction.Cancel().value) }
     val showMessageActionDialog: MutableState<Boolean> = rememberSaveable { mutableStateOf(false) }
 
+    //TODO remove 1 add currentChatId
     LaunchedEffect(Unit) {
-        viewModel.getCurrentChat(currentChatId)
+        viewModel.getCurrentChat(1)
     }
 
     LaunchedEffect(currentChatState.value) {
@@ -195,7 +195,7 @@ fun ChatScreen(
 
                         viewModel.insertMessage(
                             MessageUIModel(
-                                id = Date().time,
+                                id = Clock.System.now().toEpochMilliseconds(),
                                 chatId = currentChatState.value?.id ?: 0,
                                 author = "me",
                                 message = messageText,
@@ -204,7 +204,7 @@ fun ChatScreen(
                             )
                         )
                         val temporaryMessage = MessageUIModel(
-                            id = Date().time + 1,
+                            id = Clock.System.now().toEpochMilliseconds() + 1,
                             chatId = currentChatState.value?.id ?: 0,
                             author = "gpt-3.5-turbo",
                             message = String.EMPTY,

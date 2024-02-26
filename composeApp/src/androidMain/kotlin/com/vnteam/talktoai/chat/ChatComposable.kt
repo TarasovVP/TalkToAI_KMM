@@ -48,17 +48,14 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import clearCheckToAction
 import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.vnteam.talktoai.ExceptionMessageHandler
 import com.vnteam.talktoai.ProgressVisibilityHandler
 import com.vnteam.talktoai.R
 import org.koin.androidx.compose.koinViewModel
-import com.vnteam.talktoai.clearCheckToAction
-import com.vnteam.talktoai.dateToMilliseconds
 import com.vnteam.talktoai.getDimensionResource
-import com.vnteam.talktoai.isDefineSecondsLater
 import com.vnteam.talktoai.textLinesCount
-import com.vnteam.talktoai.textToAction
 import components.ConfirmationDialog
 import components.DataEditDialog
 import components.EmptyState
@@ -68,6 +65,7 @@ import components.TruncatableText
 import components.draggable.UpdateViewConfiguration
 import components.painterRes
 import data.database.db_entities.Chat
+import dateToMilliseconds
 import domain.ApiRequest
 import domain.CommonExtensions.EMPTY
 import domain.CommonExtensions.isNotNull
@@ -77,6 +75,9 @@ import domain.enums.MessageStatus
 import domain.models.InfoMessage
 import domain.models.MessageApi
 import domain.sealed_classes.MessageAction
+import isDefineSecondsLater
+import kotlinx.datetime.Clock
+import textToAction
 import theme.Neutral50
 import theme.Primary500
 import theme.Primary600
@@ -223,7 +224,7 @@ fun ChatScreen(
                                 chatId = currentChatState.value?.id ?: 0,
                                 author = "me",
                                 message = messageText,
-                                updatedAt = Date().dateToMilliseconds(),
+                                updatedAt = Clock.System.now().dateToMilliseconds(),
                                 status = MessageStatus.SUCCESS
                             )
                         )
@@ -232,7 +233,7 @@ fun ChatScreen(
                             chatId = currentChatState.value?.id ?: 0,
                             author = "gpt-3.5-turbo",
                             message = String.EMPTY,
-                            updatedAt = Date().dateToMilliseconds() + 1,
+                            updatedAt = Clock.System.now().dateToMilliseconds() + 1,
                             status = MessageStatus.REQUESTING
                         )
                         viewModel.insertMessage(temporaryMessage)
@@ -264,9 +265,9 @@ fun ChatScreen(
         }) { newChatName ->
         viewModel.insertChat(
             Chat(
-                id = Date().dateToMilliseconds(),
+                id = Clock.System.now().dateToMilliseconds(),
                 name = newChatName,
-                updated = Date().dateToMilliseconds()
+                updated = Clock.System.now().dateToMilliseconds()
             )
         )
         showCreateChatDialog.value = false
@@ -503,7 +504,7 @@ fun Message(
                             .wrapContentSize()
                     )
 
-                    message.status == MessageStatus.REQUESTING && Date().isDefineSecondsLater(
+                    message.status == MessageStatus.REQUESTING && Clock.System.now().isDefineSecondsLater(
                         20,
                         message.updatedAt
                     ) -> Text(

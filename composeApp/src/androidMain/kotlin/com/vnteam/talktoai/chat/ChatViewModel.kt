@@ -5,7 +5,6 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.vnteam.talktoai.base.BaseViewModel
 import mapperimpls.MessageUIMapper
-import com.vnteam.talktoai.ui_models.MessageUIModel
 import domain.sealed_classes.Result
 import data.database.db_entities.Chat
 import domain.ApiRequest
@@ -14,6 +13,7 @@ import domain.enums.MessageStatus
 import domain.usecases.ChatUseCase
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.catch
+import ui_models.MessageUIModel
 
 class ChatViewModel(
     application: Application,

@@ -37,7 +37,7 @@ class ChatViewModel(
     fun getCurrentChat(chatId: Long) {
         viewModelScope.launch {
             chatUseCase.getCurrentChat(chatId).catch {
-                it.stackTrace
+                it.printStackTrace()
             }.collect { chat ->
                 if (chat.isNull()) {
                     //TODO remove .apply { id = 1 }
@@ -52,7 +52,7 @@ class ChatViewModel(
     fun getMessagesFromChat(chatId: Long) {
         messagesFlowSubscription = viewModelScope.launch {
            chatUseCase.getMessagesFromChat(chatId).catch {
-                it.stackTrace
+                it.printStackTrace()
             }.collect { result ->
                messagesStateFlow.value = messageUIMapper.mapToUIModelList(result)
             }

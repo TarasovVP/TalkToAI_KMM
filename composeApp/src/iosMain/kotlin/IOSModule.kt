@@ -1,23 +1,17 @@
-package com.vnteam.talktoai
-
-import PlatformMessageDisplayer
-import com.vnteam.talktoai.chat.ChatViewModel
-import mapperimpls.MessageUIMapper
+import chat.ChatViewModel
 import data.database.DatabaseDriverFactory
 import domain.usecases.ChatUseCase
+import mapperimpls.MessageUIMapper
 import mapperimpls.MessageUIMapperImpl
-import org.koin.android.ext.koin.androidApplication
-import org.koin.android.ext.koin.androidContext
-import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import usecaseimpls.ChatUseCaseImpl
 
-val androidModule = module {
+val iosModule = module {
     single {
-        DatabaseDriverFactory(androidContext())
+        DatabaseDriverFactory()
     }
     single {
-        PlatformMessageDisplayer(androidContext())
+        PlatformMessageDisplayer()
     }
     single<ChatUseCase> {
         ChatUseCaseImpl(
@@ -28,9 +22,8 @@ val androidModule = module {
     single<MessageUIMapper> {
         MessageUIMapperImpl()
     }
-    viewModel {
+    single {
         ChatViewModel(
-            application = androidApplication(),
             chatUseCase = get(),
             messageUIMapper = get()
         )
