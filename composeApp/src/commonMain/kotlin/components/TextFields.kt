@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
@@ -29,6 +30,7 @@ import androidx.compose.ui.unit.sp
 import domain.CommonExtensions.EMPTY
 import theme.Neutral600
 import theme.Primary500
+import theme.Primary900
 
 @Composable
 fun PrimaryTextField(
@@ -105,11 +107,10 @@ fun PasswordTextField(inputValue: MutableState<TextFieldValue>, placeHolder: Str
             IconButton(
                 onClick = { passwordVisible.value = passwordVisible.value.not() }
             ) {
-                //TODO uncomment
-                /*Icon(
-                    imageVector = ImageVector.vectorResource(id = if (passwordVisible.value) R.drawable.ic_toggle_password_enabled else R.drawable.ic_toggle_password_disabled),
+                Icon(
+                    painter = painterRes(if (passwordVisible.value) "ic_toggle_password_enabled" else "ic_toggle_password_disabled"),
                     contentDescription = if (passwordVisible.value) "Hide password" else "Show password"
-                )*/
+                )
             }
         }
     )
@@ -160,12 +161,11 @@ fun TextFieldWithButton(
                 onSendClick.invoke(inputValue.value.text.trim())
                 inputValue.value = TextFieldValue(String.EMPTY)
             }) {
-                //TODO uncomment
-                /*Icon(
-                    imageVector = ImageVector.vectorResource(R.drawable.ic_message_send),
+                Icon(
+                    painter = painterRes("ic_message_send"),
                     contentDescription = "Send message button",
                     tint = if (isEnabled) Primary900 else Neutral600
-                )*/
+                )
             }
         }
     )

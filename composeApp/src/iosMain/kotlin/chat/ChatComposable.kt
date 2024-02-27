@@ -179,6 +179,7 @@ fun ChatScreen(
                 .fillMaxWidth()
                 .background(Primary900)
         ) {
+            onMessageDisplay.invoke(currentChatState.value?.id.toString())
             when {
                 currentChatState.value?.id == DEFAULT_CHAT_ID -> CreateChatScreen {
                     showCreateChatDialog.value = true
@@ -213,6 +214,7 @@ fun ChatScreen(
                         )
                         viewModel.insertMessage(temporaryMessage)
                         viewModel.sendRequest(
+                            onMessageDisplay,
                             temporaryMessage,
                             ApiRequest(
                                 model = "gpt-3.5-turbo", temperature = 0.7f, messages = listOf(

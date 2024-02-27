@@ -14,7 +14,7 @@ fun MainViewController(viewModel: ChatViewModel?): UIViewController {
     platformMessageDisplayer.setUIViewController(viewController)
 
     onMessageDisplay = { message ->
-        platformMessageDisplayer.showPopupMessage("isKoinInitialized: viewModel $viewModel")
+        platformMessageDisplayer.showPopupMessage("MainViewController: message $message")
     }
     return viewController
 }

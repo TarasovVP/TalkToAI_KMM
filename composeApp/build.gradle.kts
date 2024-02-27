@@ -47,6 +47,7 @@ kotlin {
             implementation("com.google.accompanist:accompanist-insets:0.10.0")
         }
         commonMain.dependencies {
+            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
             implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.5.0")
             implementation(compose.runtime)
             implementation(compose.foundation)
@@ -67,6 +68,11 @@ kotlin {
         }
         iosMain.dependencies {
             implementation(libs.koin.core)
+            implementation("com.squareup.sqldelight:native-driver:1.5.5")
+        }
+        nativeMain.dependencies {
+            implementation(libs.koin.core)
+            implementation("com.squareup.sqldelight:native-driver:1.5.5")
         }
     }
 }
