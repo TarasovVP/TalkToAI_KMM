@@ -1,20 +1,20 @@
 import androidx.compose.ui.window.ComposeUIViewController
 import chat.ChatScreen
 import chat.ChatViewModel
+import org.koin.core.component.inject
 import platform.UIKit.UIViewController
 
 fun MainViewController(viewModel: ChatViewModel?): UIViewController {
 
     val platformMessageDisplayer = PlatformMessageDisplayer()
     var onMessageDisplay: (String) -> Unit = {}
-
     val viewController = ComposeUIViewController {
-        viewModel?.let { ChatScreen(it, onMessageDisplay = onMessageDisplay) }
+        ChatScreen(onMessageDisplay = onMessageDisplay)
     }
     platformMessageDisplayer.setUIViewController(viewController)
 
     onMessageDisplay = { message ->
-        platformMessageDisplayer.showPopupMessage("MainViewController: message $message")
+        platformMessageDisplayer.showPopupMessage(message)
     }
     return viewController
 }

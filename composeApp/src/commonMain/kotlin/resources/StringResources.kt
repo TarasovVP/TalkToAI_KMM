@@ -3,7 +3,6 @@ package resources
 import domain.Constants.APP_LANG_RU
 import domain.Constants.APP_LANG_UK
 
-
 sealed class StringResources(
     var APP_NAME: String,
     var APP_ID: String,
@@ -11,6 +10,7 @@ sealed class StringResources(
     // App
     var APP_EXIT: String,
     var APP_NETWORK_UNAVAILABLE_REPEAT: String,
+    var UNKNOWN_ERROR: String,
 
     // Buttons
     var BUTTON_NEXT: String,
@@ -101,11 +101,47 @@ sealed class StringResources(
 
     // Settings privacy
     var PRIVACY_POLICY: String,
+
     // Menu item
     var MENU_INFO: String,
     var MENU_DELETE: String,
     var MENU_SEARCH: String,
-    var ERROR_MESSAGE: String
+    var ERROR_MESSAGE: String,
+
+    // Chats
+    var CHAT_CREATE_TITLE: String,
+    var CHAT_RENAME_TITLE: String,
+    var CHAT_DELETE_TITLE: String,
+    var CHAT_NAME: String,
+    var CHAT_EMPTY_STATE: String,
+    var NEW_CHAT: String,
+    var CHAT_CREATE_BUTTON: String,
+    var CHAT_EDIT_BUTTON: String,
+
+    //Messages
+    var MESSAGE_ACTION_SELECTED: String,
+    var MESSAGE_ACTION_SEND: String,
+    var MESSAGE_ACTION_COPY: String,
+    var MESSAGE_ACTION_SHARE: String,
+    var MESSAGE_ACTION_TRANSFER: String,
+    var MESSAGE_ACTION_DELETE: String,
+    var MESSAGE_TRANSFER_CONFIRMATION: String,
+    var MESSAGE_DELETE_CONFIRMATION: String,
+    var MESSAGE_EMPTY_STATE: String,
+
+    var MESSAGE_DELETE_BUTTON: String,
+    var MESSAGE_SHARE_BUTTON: String,
+    var MESSAGE_COPY_BUTTON: String,
+    var MESSAGE_SEND_BUTTON: String,
+    var MESSAGE_ENTER_REQUEST: String,
+    var MESSAGE_MORE: String,
+    var MESSAGE_HIDE: String,
+
+    var AI_AVATAR: String,
+    var ACCOUNT_AVATAR: String,
+    val NAVIGATION_ICON: String,
+    var ONBOARDING_ICON: String,
+    var ONBOARDING_SCREEN: String,
 )
 
 class StringResourcesEN : StringResources(
@@ -230,7 +266,43 @@ class StringResourcesEN : StringResources(
     MENU_INFO = "Info",
     MENU_DELETE = "Delete",
     MENU_SEARCH = "Search",
-    ERROR_MESSAGE = "An error occurred"
+    ERROR_MESSAGE = "An error occurred",
+
+    // Chats
+    CHAT_CREATE_TITLE = "Create chat",
+    CHAT_RENAME_TITLE = "Rename chat",
+    CHAT_DELETE_TITLE = "Delete chat",
+    CHAT_NAME = "Chat name",
+    CHAT_EMPTY_STATE = "Chat list is empty",
+    NEW_CHAT = "New chat",
+    CHAT_CREATE_BUTTON = "Create",
+    CHAT_EDIT_BUTTON = "Edit",
+
+    //Messages
+    MESSAGE_ACTION_SELECTED = "Selected",
+    MESSAGE_ACTION_SEND = "Send",
+    MESSAGE_ACTION_COPY = "Copy",
+    MESSAGE_ACTION_SHARE = "Share",
+    MESSAGE_ACTION_TRANSFER = "Transfer",
+    MESSAGE_ACTION_DELETE = "Delete",
+    MESSAGE_TRANSFER_CONFIRMATION = "Are you sure you want to transfer the message?",
+    MESSAGE_DELETE_CONFIRMATION = "Are you sure you want to delete the message?",
+    MESSAGE_EMPTY_STATE = "Message list is empty",
+
+    MESSAGE_DELETE_BUTTON = "Delete",
+    MESSAGE_SHARE_BUTTON = "Share",
+    MESSAGE_COPY_BUTTON = "Copy",
+    MESSAGE_SEND_BUTTON = "Send",
+    MESSAGE_ENTER_REQUEST = "Enter your message",
+    MESSAGE_MORE = "More",
+    MESSAGE_HIDE = "Hide",
+
+    AI_AVATAR = "AI avatar",
+    ACCOUNT_AVATAR = "Account",
+    NAVIGATION_ICON = "Navigation screen",
+    ONBOARDING_ICON = "Onboarding icon",
+    ONBOARDING_SCREEN = "Onboarding",
+    UNKNOWN_ERROR = "Unknown error"
 )
 
 class StringResourcesRU : StringResources(
@@ -354,7 +426,42 @@ class StringResourcesRU : StringResources(
     MENU_INFO = "Инфо",
     MENU_DELETE = "Удалить",
     MENU_SEARCH = "Поиск",
-    ERROR_MESSAGE = "Произошла ошибка"
+    ERROR_MESSAGE = "Произошла ошибка",
+
+    // Chats
+    CHAT_CREATE_TITLE = "Создать новый чат?",
+    CHAT_NAME = "Название чата",
+    CHAT_RENAME_TITLE = "Изменить название чата?",
+    CHAT_DELETE_TITLE = "Удалить чат?",
+    CHAT_EMPTY_STATE = "Список чатов пуст",
+    NEW_CHAT = "Новый чат",
+    CHAT_CREATE_BUTTON = "Кнопка создания чата",
+    CHAT_EDIT_BUTTON = "Кнопка редактирования чата",
+
+    // Messages
+    MESSAGE_ACTION_SELECTED = "Выбрано",
+    MESSAGE_ACTION_SEND = "Отправлено",
+    MESSAGE_ACTION_COPY = "Скопировано",
+    MESSAGE_ACTION_TRANSFER = "Перенесено",
+    MESSAGE_ACTION_DELETE = "Удалено",
+    MESSAGE_ACTION_SHARE = "Отправить",
+    MESSAGE_TRANSFER_CONFIRMATION = "Вы хотите перенести?",
+    MESSAGE_DELETE_CONFIRMATION = "Вы хотите удалить?",
+    MESSAGE_EMPTY_STATE = "Введите свой вопрос",
+    MESSAGE_DELETE_BUTTON = "Кнопка удаления сообщения",
+    MESSAGE_SHARE_BUTTON = "Кнопка перемещения сообщения",
+    MESSAGE_COPY_BUTTON = "Кнопка копирования сообщения",
+    MESSAGE_SEND_BUTTON = "Кнопка отправки сообщения",
+    MESSAGE_ENTER_REQUEST = "Введите запрос",
+    MESSAGE_MORE = "Больше",
+    MESSAGE_HIDE = "Скрыть",
+
+    UNKNOWN_ERROR = "Неизвестная ошибка",
+    AI_AVATAR = "Аватар ИИ",
+    ACCOUNT_AVATAR = "Аватар аккаунта",
+    NAVIGATION_ICON = "Иконка навигации",
+    ONBOARDING_ICON = "Иконка онбординга",
+    ONBOARDING_SCREEN = "Экран онбординга"
 )
 
 class StringResourcesUK : StringResources(
@@ -476,7 +583,43 @@ class StringResourcesUK : StringResources(
     MENU_INFO = "Інфо",
     MENU_DELETE = "Видалити",
     MENU_SEARCH = "Пошук",
-    ERROR_MESSAGE = "Сталася помилка")
+    ERROR_MESSAGE = "Сталася помилка",
+
+    // Chats
+    CHAT_CREATE_TITLE = "Створити новий чат?",
+    CHAT_NAME = "Назва чату",
+    CHAT_RENAME_TITLE = "Змінити назву чату?",
+    CHAT_DELETE_TITLE = "Видалити чат?",
+    CHAT_EMPTY_STATE = "Список чатів порожній",
+    NEW_CHAT = "Новий чат",
+    CHAT_CREATE_BUTTON = "Кнопка створення чату",
+    CHAT_EDIT_BUTTON = "Кнопка редагування чату",
+
+    // Messages
+    MESSAGE_ACTION_SELECTED = "Вибрано",
+    MESSAGE_ACTION_SEND = "Відправлено",
+    MESSAGE_ACTION_COPY = "Скопійовано",
+    MESSAGE_ACTION_TRANSFER = "Перенесено",
+    MESSAGE_ACTION_DELETE = "Видалено",
+    MESSAGE_ACTION_SHARE = "Відправити",
+    MESSAGE_TRANSFER_CONFIRMATION = "Ви хочете перенести?",
+    MESSAGE_DELETE_CONFIRMATION = "Ви хочете видалити?",
+    MESSAGE_EMPTY_STATE = "Введіть своє питання",
+    MESSAGE_DELETE_BUTTON = "Кнопка видалення повідомлення",
+    MESSAGE_SHARE_BUTTON = "Кнопка переміщення повідомлення",
+    MESSAGE_COPY_BUTTON = "Кнопка копіювання повідомлення",
+    MESSAGE_SEND_BUTTON = "Кнопка відправки повідомлення",
+    MESSAGE_ENTER_REQUEST = "Введіть запит",
+    MESSAGE_MORE = "Більше",
+    MESSAGE_HIDE = "Приховати",
+
+    UNKNOWN_ERROR = "Невідома помилка",
+    AI_AVATAR = "Аватар ШІ",
+    ACCOUNT_AVATAR = "Аватар облікового запису",
+    NAVIGATION_ICON = "Іконка навігації",
+    ONBOARDING_ICON = "Іконка онбордингу",
+    ONBOARDING_SCREEN = "Екран онбордингу"
+)
 
 fun getStringResourcesByLocale(locale: String): StringResources {
     return when (locale) {

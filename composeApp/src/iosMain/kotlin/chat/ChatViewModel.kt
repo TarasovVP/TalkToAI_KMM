@@ -60,7 +60,6 @@ class ChatViewModel(
     }
 
     fun sendRequest(
-        onMessageDisplay: (String) -> Unit,
         temporaryMessage: MessageUIModel,
         apiRequest: ApiRequest
     ) {
@@ -69,9 +68,6 @@ class ChatViewModel(
             }.collect { result ->
                 when (result) {
                     is Result.Success -> result.data?.let { apiResponse ->
-                        viewModelScope.launch(Dispatchers.Main) {
-                            onMessageDisplay.invoke("apiResponse: $apiResponse")
-                        }
                         insertMessage(temporaryMessage.apply {
                             author = apiResponse.model.orEmpty()
                             message = apiResponse.choices?.firstOrNull()?.message?.content.orEmpty()
@@ -80,9 +76,6 @@ class ChatViewModel(
                         })
                     }
                     is Result.Failure -> {
-                        viewModelScope.launch(Dispatchers.Main) {
-                            onMessageDisplay.invoke("errorMessage: ${result.errorMessage}")
-                        }
                         insertMessage(temporaryMessage.apply {
                             status = MessageStatus.ERROR
                             errorMessage = result.errorMessage.orEmpty()

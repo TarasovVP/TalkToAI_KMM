@@ -9,11 +9,14 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.MutableLiveData
 import domain.Constants.ERROR_MESSAGE
 import domain.models.InfoMessage
+import resources.StringResources
+import resources.getStringResourcesByLocale
 import kotlin.math.ceil
 
 @Composable
@@ -112,4 +115,9 @@ fun getDimensionResource(resId: Int): Dp {
     val density = LocalDensity.current.density
     val sizeInPixels = resources.getDimension(resId)
     return (sizeInPixels / density).dp
+}
+
+@Composable
+fun stringRes(): StringResources {
+    return getStringResourcesByLocale(Locale.current.language)
 }

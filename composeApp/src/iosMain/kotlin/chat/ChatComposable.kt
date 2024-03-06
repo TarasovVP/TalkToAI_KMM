@@ -63,6 +63,7 @@ import domain.sealed_classes.MessageAction
 import isDefineSecondsLater
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.datetime.Clock
+import org.koin.compose.koinInject
 import resources.LocalAvatarSize
 import resources.LocalDefaultTextSize
 import resources.LocalLargePadding
@@ -77,7 +78,7 @@ import theme.Primary900
 
 @Composable
 fun ChatScreen(
-    viewModel: ChatViewModel,
+    viewModel: ChatViewModel = koinInject<ChatViewModel>(),
     onMessageDisplay: (String) -> Unit = {}
 ) {
     val isMessageActionModeState = remember { mutableStateOf<Boolean?>(null) }
@@ -179,7 +180,7 @@ fun ChatScreen(
                 .fillMaxWidth()
                 .background(Primary900)
         ) {
-            onMessageDisplay.invoke(currentChatState.value?.id.toString())
+
             when {
                 currentChatState.value?.id == DEFAULT_CHAT_ID -> CreateChatScreen {
                     showCreateChatDialog.value = true
@@ -214,7 +215,6 @@ fun ChatScreen(
                         )
                         viewModel.insertMessage(temporaryMessage)
                         viewModel.sendRequest(
-                            onMessageDisplay,
                             temporaryMessage,
                             ApiRequest(
                                 model = "gpt-3.5-turbo", temperature = 0.7f, messages = listOf(
