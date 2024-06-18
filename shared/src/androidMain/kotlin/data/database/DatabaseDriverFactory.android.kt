@@ -1,7 +1,7 @@
 package data.database
 
-import com.squareup.sqldelight.android.AndroidSqliteDriver
-import com.squareup.sqldelight.db.SqlDriver
+import app.cash.sqldelight.android.AndroidSqliteDriver
+import app.cash.sqldelight.db.SqlDriver
 import com.vnteam.talktoai.AppDatabase
 
 actual class DatabaseDriverFactory(private val context: android.content.Context) {

@@ -1,7 +1,7 @@
 package data.database
 
-import com.squareup.sqldelight.db.SqlDriver
-import com.squareup.sqldelight.sqlite.driver.JdbcSqliteDriver
+import app.cash.sqldelight.db.SqlDriver
+import app.cash.sqldelight.sqlite.driver.JdbcSqliteDriver
 import com.vnteam.talktoai.AppDatabase
 
 actual class DatabaseDriverFactory {

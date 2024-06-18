@@ -1,7 +1,7 @@
 package data.database.dao
 
-import com.squareup.sqldelight.runtime.coroutines.asFlow
-import com.squareup.sqldelight.runtime.coroutines.mapToList
+import app.cash.sqldelight.runtime.coroutines.asFlow
+import app.cash.sqldelight.runtime.coroutines.mapToList
 import com.vnstudio.talktoai.AppDatabaseQueries
 import data.database.db_entities.Message
 import domain.enums.MessageStatus

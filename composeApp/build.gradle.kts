@@ -1,11 +1,12 @@
-import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
-    alias(libs.plugins.jetbrainsCompose)
-    alias(libs.plugins.serialization)
+    alias(libs.plugins.composeMultiplatform)
+    alias(libs.plugins.compose.compiler)
 }
 
 kotlin {
@@ -15,72 +16,94 @@ kotlin {
                 jvmTarget = "1.8"
             }
         }
+        @OptIn(ExperimentalKotlinGradlePluginApi::class)
+        instrumentedTestVariant {
+            sourceSetTree.set(KotlinSourceSetTree.test)
+            dependencies {
+                debugImplementation(libs.androidx.testManifest)
+                implementation(libs.androidx.junit4)
+            }
+        }
     }
-    
-    jvm("desktop")
-    
+    task("testClasses")
     listOf(
         iosX64(),
         iosArm64(),
         iosSimulatorArm64()
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
-            baseName = "ComposeApp"
+    ).forEach {
+        it.binaries.framework {
+            freeCompilerArgs += "-Xbinary=bundleId=com.vnteam.talktoai.composeApp"
+            linkerOpts.add("-lsqlite3")
+            baseName = "composeApp"
             isStatic = true
         }
     }
-    
+    jvm("desktop")
+    js(IR) {
+        browser {
+            commonWebpackConfig {
+                outputFileName = "webApp.js"
+            }
+        }
+        binaries.executable()
+    }
     sourceSets {
         val desktopMain by getting
-        
-        androidMain.dependencies {
-            implementation(libs.compose.ui.tooling.preview)
-            implementation(libs.androidx.activity.compose)
-            implementation(libs.koin.android)
-            implementation(libs.koin.android.compose)
-            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
-            implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
-            implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.2")
-            implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
-            implementation("androidx.compose.runtime:runtime-livedata:1.6.1")
-            implementation("androidx.compose.ui:ui:1.6.1")
-            implementation("com.google.accompanist:accompanist-insets:0.10.0")
-            implementation("androidx.datastore:datastore-preferences:1.0.0")
-        }
+
         commonMain.dependencies {
-            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
-            implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.5.0")
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.material)
-            implementation(compose.ui)
-            @OptIn(ExperimentalComposeLibrary::class)
-            implementation(compose.components.resources)
             implementation(projects.shared)
+            implementation(compose.foundation)
+            implementation(compose.material3)
+            implementation(compose.components.resources)
+            implementation(libs.androidx.viewmodel.compose)
+            //Koin
             implementation(libs.koin.core)
-            implementation("io.insert-koin:koin-compose:1.1.2")
+            implementation(libs.koin.compose)
+            //Coil
+            implementation(libs.coil.compose)
+            implementation(libs.coil.network.ktor)
+            //Navigation
+            implementation(libs.navigation.compose)
+
+        }
+        androidMain.dependencies {
+            implementation(libs.androidx.multidex)
+            // Koin
+            implementation(libs.koin.android)
+            implementation(libs.koin.androidx.compose)
+
+            //Compose
+            implementation(compose.material3)
+            implementation(libs.androidx.activity.compose)
+            implementation(libs.material.ripple)
+
+            implementation(libs.androidx.multidex)
         }
         desktopMain.dependencies {
-            implementation(compose.desktop.currentOs)
             implementation(libs.koin.core)
-            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
-            implementation("org.apache.logging.log4j:log4j-slf4j-impl:2.13.3")
-            implementation("org.apache.logging.log4j:log4j-api:2.13.3")
+            implementation(compose.desktop.currentOs)
         }
         iosMain.dependencies {
             implementation(libs.koin.core)
-            implementation("com.squareup.sqldelight:native-driver:1.5.5")
         }
-        nativeMain.dependencies {
+        jsMain.dependencies {
             implementation(libs.koin.core)
-            implementation("com.squareup.sqldelight:native-driver:1.5.5")
+            //Compose
+            implementation(compose.html.core)
+            implementation(compose.runtime)
+            implementation(compose.foundation)
+            implementation(compose.material3)
+            implementation(compose.components.resources)
+            //Koin
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose)
         }
     }
 }
 
 android {
     namespace = "com.vnteam.talktoai"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     sourceSets["main"].res.srcDirs("src/androidMain/res")
@@ -88,27 +111,36 @@ android {
 
     defaultConfig {
         applicationId = "com.vnteam.talktoai"
-        minSdk = libs.versions.android.minSdk.get().toInt()
-        targetSdk = libs.versions.android.targetSdk.get().toInt()
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
+
+        multiDexEnabled = true
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
+
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-    dependencies {
-        debugImplementation(libs.compose.ui.tooling)
+
+    buildFeatures {
+        viewBinding = true
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = libs.versions.kotlinCompilerExtensionVersion.get()
     }
 }
 
@@ -122,4 +154,10 @@ compose.desktop {
             packageVersion = "1.0.0"
         }
     }
+}
+
+compose.resources {
+    publicResClass = true
+    packageOfResClass = "com.vnteam.talktoai"
+    generateResClass = always
 }
