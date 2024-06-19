@@ -9,8 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.tooling.preview.Preview
-import com.vnstudio.talktoai.presentation.screens.authorization.onboarding.OnboardingContent
+import com.vnteam.talktoai.onboarding.OnboardingContent
 import domain.models.ScreenState
 import org.koin.android.ext.android.inject
 
@@ -31,10 +30,4 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun AppAndroidPreview() {
-    App()
 }

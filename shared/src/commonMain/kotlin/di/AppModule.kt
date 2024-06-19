@@ -1,7 +1,6 @@
 package di
 
-import com.vnteam.talktoai.AppDatabase
-import data.database.DatabaseDriverFactory
+import data.database.SharedDatabase
 import data.database.dao.ChatDao
 import data.database.dao.ChatDaoImpl
 import data.database.dao.MessageDao
@@ -38,12 +37,11 @@ val appModule = module {
         }
     }
     single {
-        val sqlDriver = get<DatabaseDriverFactory>().createDriver()
-        AppDatabase(sqlDriver)
+        SharedDatabase(get())
     }
 
-    single<ChatDao> { ChatDaoImpl(get<AppDatabase>().appDatabaseQueries) }
-    single<MessageDao> { MessageDaoImpl(get<AppDatabase>().appDatabaseQueries) }
+    single<ChatDao> { ChatDaoImpl(get()) }
+    single<MessageDao> { MessageDaoImpl(get()) }
     single<ChatRepository> {
         ChatRepositoryImpl(
             chatDao = get()

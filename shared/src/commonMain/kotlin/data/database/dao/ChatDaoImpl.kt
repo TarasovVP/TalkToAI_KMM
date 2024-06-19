@@ -1,104 +1,122 @@
 package data.database.dao
 
-import com.vnstudio.talktoai.AppDatabaseQueries
+import app.cash.sqldelight.async.coroutines.awaitAsList
+import app.cash.sqldelight.async.coroutines.awaitAsOneOrNull
+import data.database.SharedDatabase
 import data.database.db_entities.Chat
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.callbackFlow
 
-class ChatDaoImpl(private val appDatabaseQueries: AppDatabaseQueries) : ChatDao {
+class ChatDaoImpl(private val appDatabase: SharedDatabase) : ChatDao {
 
-    override fun insertChats(chats: List<Chat>) {
-        appDatabaseQueries.transaction {
-            chats.forEach { chat ->
-                appDatabaseQueries.insertChat(
-                    chat.id,
-                    chat.name,
-                    chat.updated,
-                    chat.listOrder.toLong()
-                )
+    override suspend fun insertChats(chats: List<Chat>) {
+        appDatabase { db ->
+            db.appDatabaseQueries.transaction {
+                chats.forEach { chat ->
+                    db.appDatabaseQueries.insertChat(
+                        chat.id,
+                        chat.name,
+                        chat.updated,
+                        chat.listOrder.toLong()
+                    )
+                }
             }
         }
     }
 
-    override fun insertChat(chat: Chat) {
-        appDatabaseQueries.insertChat(
-            chat.id,
-            chat.name,
-            chat.updated,
-            chat.listOrder.toLong()
-        )
+    override suspend fun insertChat(chat: Chat) {
+        appDatabase { db ->
+            db.appDatabaseQueries.insertChat(
+                chat.id,
+                chat.name,
+                chat.updated,
+                chat.listOrder.toLong()
+            )
+        }
     }
 
-    override fun deleteChats(chatIds: List<Long>) {
-        appDatabaseQueries.transaction {
-            chatIds.forEach { chatId ->
-                appDatabaseQueries.deleteChat(chatId)
+    override suspend fun deleteChats(chatIds: List<Long>) {
+        appDatabase { db ->
+            db.appDatabaseQueries.transaction {
+                chatIds.forEach { chatId ->
+                    db.appDatabaseQueries.deleteChat(chatId)
+                }
             }
         }
     }
 
-    override fun getChats(): Flow<List<Chat>> {
-        return appDatabaseQueries.getChats().asFlow().mapToList().map { chats ->
-            chats.map { chat ->
+    override suspend fun getChats(): Flow<List<Chat>> = callbackFlow {
+        appDatabase { db ->
+            trySend(db.appDatabaseQueries.getChats().awaitAsList().map { chat ->
                 Chat(
                     chat.id,
                     chat.name,
                     chat.updated,
                     chat.listOrder.toInt()
                 )
-            }
+            }).isSuccess
+            awaitClose { }
         }
     }
 
-    override fun getLastUpdatedChat(): Flow<Chat?> {
-        return appDatabaseQueries.getLastUpdatedChat().asFlow().mapToOneOrNull().map {
-            it?.let {
+    override suspend fun getLastUpdatedChat(): Flow<Chat?> = callbackFlow {
+        appDatabase { db ->
+            trySend(db.appDatabaseQueries.getLastUpdatedChat().awaitAsOneOrNull()?.run {
                 Chat(
-                    it.id,
-                    it.name,
-                    it.updated,
-                    it.listOrder.toInt()
+                    id,
+                    name,
+                    updated,
+                    listOrder.toInt()
                 )
-            }
+            }).isSuccess
+            awaitClose { }
         }
     }
 
-    override fun getChatById(chatId: Long): Flow<Chat?> {
-        return appDatabaseQueries.getChatById(chatId).asFlow().mapToOneOrNull().map {
-            it?.let {
+    override suspend fun getChatById(chatId: Long): Flow<Chat?> = callbackFlow {
+        appDatabase { db ->
+            trySend(db.appDatabaseQueries.getChatById(chatId).awaitAsOneOrNull()?.run {
                 Chat(
-                    it.id,
-                    it.name,
-                    it.updated,
-                    it.listOrder.toInt()
+                    id,
+                    name,
+                    updated,
+                    listOrder.toInt()
                 )
+            }).isSuccess
+            awaitClose { }
+        }
+    }
+
+    override suspend fun updateChat(chat: Chat) {
+        appDatabase { db ->
+            db.appDatabaseQueries.updateChat(
+                chat.name,
+                chat.updated,
+                chat.listOrder.toLong(),
+                chat.id
+            )
+        }
+    }
+
+    override suspend fun updateChats(chats: List<Chat>) {
+        appDatabase { db ->
+            db.appDatabaseQueries.transaction {
+                chats.forEach { chat ->
+                    db.appDatabaseQueries.updateChat(
+                        chat.name,
+                        chat.updated,
+                        chat.listOrder.toLong(),
+                        chat.id
+                    )
+                }
             }
         }
     }
 
-    override fun updateChat(chat: Chat) {
-        appDatabaseQueries.updateChat(
-            chat.name,
-            chat.updated,
-            chat.listOrder.toLong(),
-            chat.id
-        )
-    }
-
-    override fun updateChats(chats: List<Chat>) {
-        appDatabaseQueries.transaction {
-            chats.forEach { chat ->
-                appDatabaseQueries.updateChat(
-                    chat.name,
-                    chat.updated,
-                    chat.listOrder.toLong(),
-                    chat.id
-                )
-            }
+    override suspend fun deleteChat(chat: Chat) {
+        appDatabase { db ->
+            db.appDatabaseQueries.deleteChat(chat.id)
         }
-    }
-
-    override fun deleteChat(chat: Chat) {
-        appDatabaseQueries.deleteChat(chat.id)
     }
 }

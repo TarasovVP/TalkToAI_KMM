@@ -9,11 +9,8 @@ import domain.repositories.MessageRepository
 import domain.CommonExtensions.handleResponse
 import domain.CommonExtensions.orZero
 import domain.TestClass
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 
 
 class MessageRepositoryImpl(
@@ -43,7 +40,7 @@ class MessageRepositoryImpl(
     override suspend fun sendRequest(apiRequest: ApiRequest) = flow {
         val httpResponse = apiService.sendRequest(apiRequest)
         emit(httpResponse.handleResponse<ApiResponse>())
-    }.flowOn(Dispatchers.IO)
+    }
 
     override fun getTest(): TestClass {
         val testClass = TestClass()

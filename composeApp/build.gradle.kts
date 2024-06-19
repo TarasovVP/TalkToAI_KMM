@@ -65,6 +65,8 @@ kotlin {
             //Navigation
             implementation(libs.navigation.compose)
 
+            implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.5.0")
+
         }
         androidMain.dependencies {
             implementation(libs.androidx.multidex)
@@ -77,7 +79,8 @@ kotlin {
             implementation(libs.androidx.activity.compose)
             implementation(libs.material.ripple)
 
-            implementation(libs.androidx.multidex)
+            implementation("androidx.datastore:datastore-preferences:1.1.1")
+            implementation("androidx.compose.runtime:runtime-livedata:1.6.1")
         }
         desktopMain.dependencies {
             implementation(libs.koin.core)

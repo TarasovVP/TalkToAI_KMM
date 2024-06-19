@@ -5,21 +5,21 @@ import kotlinx.coroutines.flow.Flow
 
 interface ChatDao {
 
-    fun insertChats(chats: List<Chat>)
+    suspend fun insertChats(chats: List<Chat>)
 
-    fun insertChat(chat: Chat)
+    suspend fun insertChat(chat: Chat)
 
-    fun deleteChats(chatIds: List<Long>)
+    suspend fun deleteChats(chatIds: List<Long>)
 
-    fun getChats(): Flow<List<Chat>>
+    suspend fun getChats(): Flow<List<Chat>>
 
-    fun getLastUpdatedChat(): Flow<Chat?>
+    suspend fun getLastUpdatedChat(): Flow<Chat?>
 
-    fun getChatById(chatId: Long): Flow<Chat?>
+    suspend fun getChatById(chatId: Long): Flow<Chat?>
 
-    fun updateChat(chat: Chat)
+    suspend fun updateChat(chat: Chat)
 
-    fun updateChats(chats: List<Chat>)
+    suspend fun updateChats(chats: List<Chat>)
 
-    fun deleteChat(chat: Chat)
+    suspend fun deleteChat(chat: Chat)
 }

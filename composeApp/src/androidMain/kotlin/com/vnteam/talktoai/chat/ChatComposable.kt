@@ -24,10 +24,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.IconButton
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
-import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
@@ -49,7 +49,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import clearCheckToAction
-import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.vnteam.talktoai.ExceptionMessageHandler
 import com.vnteam.talktoai.ProgressVisibilityHandler
 import com.vnteam.talktoai.R
@@ -185,7 +184,7 @@ fun ChatScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .navigationBarsWithImePadding(),
+            /*.navigationBarsWithImePadding()*/,
         verticalArrangement = Arrangement.Top
     ) {
         Box(modifier = Modifier.weight(1f)) {
