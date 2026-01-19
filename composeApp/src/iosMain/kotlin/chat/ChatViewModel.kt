@@ -1,10 +1,10 @@
 package chat
 
-import domain.sealed_classes.Result
 import data.database.db_entities.Chat
 import domain.ApiRequest
 import domain.CommonExtensions.isNull
 import domain.enums.MessageStatus
+import domain.sealed_classes.Result
 import domain.usecases.ChatUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -19,7 +19,7 @@ import ui_models.MessageUIModel
 
 class ChatViewModel(
     private val chatUseCase: ChatUseCase,
-    private val messageUIMapper: MessageUIMapper
+    private val messageUIMapper: MessageUIMapper,
 ) {
 
     val currentChatStateFlow = MutableStateFlow<Chat?>(null)
@@ -51,17 +51,17 @@ class ChatViewModel(
 
     fun getMessagesFromChat(chatId: Long) {
         messagesFlowSubscription = viewModelScope.launch {
-           chatUseCase.getMessagesFromChat(chatId).catch {
+            chatUseCase.getMessagesFromChat(chatId).catch {
                 it.printStackTrace()
             }.collect { result ->
-               messagesStateFlow.value = messageUIMapper.mapToUIModelList(result)
+                messagesStateFlow.value = messageUIMapper.mapToUIModelList(result)
             }
         }
     }
 
     fun sendRequest(
         temporaryMessage: MessageUIModel,
-        apiRequest: ApiRequest
+        apiRequest: ApiRequest,
     ) {
         viewModelScope.launch {
             chatUseCase.sendRequest(apiRequest).catch {
@@ -75,6 +75,7 @@ class ChatViewModel(
                             status = MessageStatus.SUCCESS
                         })
                     }
+
                     is Result.Failure -> {
                         insertMessage(temporaryMessage.apply {
                             status = MessageStatus.ERROR

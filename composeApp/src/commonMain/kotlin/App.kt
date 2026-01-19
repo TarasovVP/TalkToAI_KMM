@@ -1,5 +1,4 @@
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Button
@@ -19,8 +18,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.painterResource
-import org.koin.compose.koinInject
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
@@ -42,7 +39,10 @@ fun App(isKoinInitialized: Boolean = true, onMessageDisplay: (String) -> Unit = 
                 Text("Click me!")
             }
             AnimatedVisibility(showContent) {
-                Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+                Column(
+                    Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
                     //Image(painterResource("compose-multiplatform.xml"), null)
                     Text("Compose: $greeting")
                 }
@@ -54,7 +54,7 @@ fun App(isKoinInitialized: Boolean = true, onMessageDisplay: (String) -> Unit = 
 fun doSomething(
     messageRepository: MessageRepository? = null,
     platformCoroutineDispatcher: PlatformCoroutineDispatcher,
-    onMessageDisplay: (String) -> Unit = {}
+    onMessageDisplay: (String) -> Unit = {},
 ) {
     CoroutineScope(platformCoroutineDispatcher.io).launch {
         messageRepository?.sendRequest(

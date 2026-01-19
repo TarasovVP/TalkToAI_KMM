@@ -1,4 +1,3 @@
-
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.plus
@@ -23,7 +22,15 @@ fun Instant.dateToMilliseconds(): Long {
 fun Long.millsSecondsToDateTime(): String {
     val instant = Instant.fromEpochMilliseconds(this)
     val localDateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
-    return "${localDateTime.dayOfMonth.toString().padStart(2, '0')}-${localDateTime.monthNumber.toString().padStart(2, '0')}-${localDateTime.year}, ${localDateTime.hour.toString().padStart(2, '0')}:${localDateTime.minute.toString().padStart(2, '0')}:${localDateTime.second.toString().padStart(2, '0')}"
+    return "${
+        localDateTime.dayOfMonth.toString().padStart(2, '0')
+    }-${
+        localDateTime.monthNumber.toString().padStart(2, '0')
+    }-${localDateTime.year}, ${
+        localDateTime.hour.toString().padStart(2, '0')
+    }:${localDateTime.minute.toString().padStart(2, '0')}:${
+        localDateTime.second.toString().padStart(2, '0')
+    }"
 }
 
 fun Instant.isDefineSecondsLater(seconds: Int, updated: Long): Boolean {

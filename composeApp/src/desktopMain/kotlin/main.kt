@@ -5,10 +5,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import chat.ChatScreen
-import resources.getStringResourcesByLocale
 import di.doInitKoin
 import domain.models.InfoMessage
 import org.koin.java.KoinJavaComponent.inject
+import resources.getStringResourcesByLocale
 import java.util.Locale
 
 fun main() {

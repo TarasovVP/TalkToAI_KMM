@@ -8,17 +8,20 @@ import ui_models.MessageUIModel
 class MessageUIMapperImpl : MessageUIMapper {
 
     override fun mapToUIModel(from: Message): MessageUIModel {
-        return MessageUIModel(from.id.orZero(), chatId = from.chatId.orZero(),
-        author = from.author.orEmpty(),
-        message = from.message.orEmpty(),
-        updatedAt = from.updatedAt.orZero(),
-        status = from.status ?: MessageStatus.REQUESTING,
-        errorMessage = from.errorMessage.orEmpty(),
-        isTruncated = from.truncated)
+        return MessageUIModel(
+            from.id.orZero(), chatId = from.chatId.orZero(),
+            author = from.author.orEmpty(),
+            message = from.message.orEmpty(),
+            updatedAt = from.updatedAt.orZero(),
+            status = from.status ?: MessageStatus.REQUESTING,
+            errorMessage = from.errorMessage.orEmpty(),
+            isTruncated = from.truncated
+        )
     }
 
     override fun mapFromUIModel(to: MessageUIModel): Message {
-        return Message(to.id, chatId = to.chatId,
+        return Message(
+            to.id, chatId = to.chatId,
             author = to.author,
             message = to.message,
             updatedAt = to.updatedAt,

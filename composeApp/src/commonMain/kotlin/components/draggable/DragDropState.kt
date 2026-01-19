@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 class DragDropState internal constructor(
     val state: LazyListState,
     private val scope: CoroutineScope,
-    private val onSwap: (Int, Int) -> Unit
+    private val onSwap: (Int, Int) -> Unit,
 ) {
     private var draggedDistance by mutableStateOf(0f)
     private var draggingItemInitialOffset by mutableStateOf(0)
@@ -109,8 +109,8 @@ class DragDropState internal constructor(
             val startOffset = it.offset + draggedDistance
             val endOffset = it.offsetEnd + draggedDistance
             return@let when {
-                draggedDistance > 0 -> (endOffset - state.layoutInfo.viewportEndOffset+50f).takeIf { diff -> diff > 0 }
-                draggedDistance < 0 -> (startOffset - state.layoutInfo.viewportStartOffset-50f).takeIf { diff -> diff < 0 }
+                draggedDistance > 0 -> (endOffset - state.layoutInfo.viewportEndOffset + 50f).takeIf { diff -> diff > 0 }
+                draggedDistance < 0 -> (startOffset - state.layoutInfo.viewportStartOffset - 50f).takeIf { diff -> diff < 0 }
                 else -> null
             }
         } ?: 0f

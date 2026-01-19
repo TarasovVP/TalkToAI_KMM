@@ -6,12 +6,7 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
-import android.util.Log
 import domain.CommonExtensions.isTrue
-import ui_models.MessageUIModel
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 fun Application.isNetworkAvailable(): Boolean {
     return (this as? TalkToAIApp)?.isNetworkAvailable.isTrue()

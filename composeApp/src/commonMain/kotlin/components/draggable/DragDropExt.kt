@@ -9,7 +9,11 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.LazyListItemInfo
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalViewConfiguration
@@ -19,7 +23,7 @@ import androidx.compose.ui.zIndex
 @Composable
 fun rememberDragDropState(
     lazyListState: LazyListState,
-    onSwap: (Int, Int) -> Unit
+    onSwap: (Int, Int) -> Unit,
 ): DragDropState {
     val scope = rememberCoroutineScope()
     val state = remember(lazyListState) {
@@ -48,7 +52,7 @@ fun LazyItemScope.DraggableItem(
     dragDropState: DragDropState,
     index: Int,
     modifier: Modifier = Modifier,
-    content: @Composable ColumnScope.(isDragging: Boolean) -> Unit
+    content: @Composable ColumnScope.(isDragging: Boolean) -> Unit,
 ) {
     val current: Float by animateFloatAsState(dragDropState.draggingItemOffset * 0.67f)
     val previous: Float by animateFloatAsState(dragDropState.previousItemOffset.value * 0.67f)
@@ -79,7 +83,7 @@ fun LazyItemScope.DraggableItem(
 @Composable
 fun UpdateViewConfiguration(
     longPressTimeoutMillis: Long? = null,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     fun ViewConfiguration.updateViewConfiguration() = object : ViewConfiguration {
         override val longPressTimeoutMillis

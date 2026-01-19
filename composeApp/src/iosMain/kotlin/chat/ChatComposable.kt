@@ -40,7 +40,6 @@ import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import clearCheckToAction
-import ui_models.MessageUIModel
 import components.ConfirmationDialog
 import components.DataEditDialog
 import components.EmptyState
@@ -75,11 +74,12 @@ import theme.Neutral50
 import theme.Primary500
 import theme.Primary600
 import theme.Primary900
+import ui_models.MessageUIModel
 
 @Composable
 fun ChatScreen(
     viewModel: ChatViewModel = koinInject<ChatViewModel>(),
-    onMessageDisplay: (String) -> Unit = {}
+    onMessageDisplay: (String) -> Unit = {},
 ) {
     val isMessageActionModeState = remember { mutableStateOf<Boolean?>(null) }
     val infoMessageState = remember { mutableStateOf<InfoMessage?>(null) }
@@ -402,11 +402,13 @@ fun Message(
             }
     ) {
 
-        Column(modifier = Modifier
-            .fillMaxHeight()
-            .width(32.dp)
-            .padding(top = 6.dp),
-            verticalArrangement = Arrangement.Top) {
+        Column(
+            modifier = Modifier
+                .fillMaxHeight()
+                .width(32.dp)
+                .padding(top = 6.dp),
+            verticalArrangement = Arrangement.Top
+        ) {
             //TODO uncomment
             /*if (isMessageDeleteModeState.value.isTrue()) {
                 AsyncImage(
@@ -462,10 +464,11 @@ fun Message(
                             .wrapContentSize()
                     )
 
-                    message.status == MessageStatus.REQUESTING && Clock.System.now().isDefineSecondsLater(
-                        20,
-                        message.updatedAt
-                    ) -> Text(
+                    message.status == MessageStatus.REQUESTING && Clock.System.now()
+                        .isDefineSecondsLater(
+                            20,
+                            message.updatedAt
+                        ) -> Text(
                         text = "Неизвестная ошибка",
                         fontSize = 16.sp,
                         color = Color.Red,

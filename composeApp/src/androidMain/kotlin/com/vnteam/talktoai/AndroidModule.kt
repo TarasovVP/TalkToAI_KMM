@@ -7,11 +7,11 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import com.vnteam.talktoai.chat.ChatViewModel
 import com.vnteam.talktoai.onboarding.OnBoardingViewModel
-import mapperimpls.MessageUIMapper
 import data.database.DatabaseDriverFactory
 import domain.repositories.DataStoreRepository
 import domain.usecases.ChatUseCase
 import domain.usecases.OnBoardingUseCase
+import mapperimpls.MessageUIMapper
 import mapperimpls.MessageUIMapperImpl
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext

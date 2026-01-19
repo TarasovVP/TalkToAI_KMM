@@ -1,7 +1,6 @@
 import androidx.compose.ui.window.ComposeUIViewController
 import chat.ChatScreen
 import chat.ChatViewModel
-import org.koin.core.component.inject
 import platform.UIKit.UIViewController
 
 fun MainViewController(viewModel: ChatViewModel?): UIViewController {

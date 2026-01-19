@@ -99,9 +99,11 @@ fun OnboardingPage(page: Int, onClick: () -> Unit) {
                 .fillMaxWidth()
         )
         PrimaryButton(
-            text = if (page == 3) stringRes().AUTHORIZATION_ENTER else stringRes().BUTTON_NEXT, modifier = Modifier
+            text = if (page == 3) stringRes().AUTHORIZATION_ENTER else stringRes().BUTTON_NEXT,
+            modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 40.dp), onClick = onClick
+                .padding(vertical = 40.dp),
+            onClick = onClick
         )
     }
 }

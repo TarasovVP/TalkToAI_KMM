@@ -15,7 +15,7 @@ data class MessageUIModel(
     var updatedAt: Long = 0,
     var status: MessageStatus = MessageStatus.REQUESTING,
     var errorMessage: String = String.EMPTY,
-    var isTruncated: Boolean = false
+    var isTruncated: Boolean = false,
 ) {
     var isCheckedToDelete = mutableStateOf(false)
 }

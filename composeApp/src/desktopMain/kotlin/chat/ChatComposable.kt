@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -40,7 +39,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import clearCheckToAction
-import ui_models.MessageUIModel
 import components.ConfirmationDialog
 import components.DataEditDialog
 import components.EmptyState
@@ -74,6 +72,7 @@ import theme.Neutral50
 import theme.Primary500
 import theme.Primary600
 import theme.Primary900
+import ui_models.MessageUIModel
 import java.util.Date
 
 @Composable
@@ -400,11 +399,13 @@ fun Message(
             }
     ) {
 
-        Column(modifier = Modifier
-            .fillMaxHeight()
-            .width(32.dp)
-            .padding(top = 6.dp),
-            verticalArrangement = Arrangement.Top) {
+        Column(
+            modifier = Modifier
+                .fillMaxHeight()
+                .width(32.dp)
+                .padding(top = 6.dp),
+            verticalArrangement = Arrangement.Top
+        ) {
             //TODO uncomment
             /*if (isMessageDeleteModeState.value.isTrue()) {
                 AsyncImage(
@@ -460,10 +461,11 @@ fun Message(
                             .wrapContentSize()
                     )
 
-                    message.status == MessageStatus.REQUESTING && Clock.System.now().isDefineSecondsLater(
-                        20,
-                        message.updatedAt
-                    ) -> Text(
+                    message.status == MessageStatus.REQUESTING && Clock.System.now()
+                        .isDefineSecondsLater(
+                            20,
+                            message.updatedAt
+                        ) -> Text(
                         text = "Неизвестная ошибка",
                         fontSize = 16.sp,
                         color = Color.Red,

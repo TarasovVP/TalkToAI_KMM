@@ -2,7 +2,11 @@ package components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -43,7 +47,13 @@ fun ConfirmationDialog(
                                 .padding(16.dp),
                             textAlign = TextAlign.Center,
                         )
-                        SubmitButtons(primaryButtonText, secondaryButtonText, true, onDismiss, onConfirmationClick)
+                        SubmitButtons(
+                            primaryButtonText,
+                            secondaryButtonText,
+                            true,
+                            onDismiss,
+                            onConfirmationClick
+                        )
                     }
                 }
             )
@@ -82,7 +92,12 @@ fun DataEditDialog(
                             textAlign = TextAlign.Center,
                         )
                         SecondaryTextField(inputValue, placeHolder)
-                        SubmitButtons(primaryButtonText, secondaryButtonText, inputValue.value.text.isNotEmpty(), onDismiss) {
+                        SubmitButtons(
+                            primaryButtonText,
+                            secondaryButtonText,
+                            inputValue.value.text.isNotEmpty(),
+                            onDismiss
+                        ) {
                             onConfirmationClick.invoke(inputValue.value.text)
                         }
                     }

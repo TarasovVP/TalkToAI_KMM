@@ -52,7 +52,6 @@ import clearCheckToAction
 import com.vnteam.talktoai.ExceptionMessageHandler
 import com.vnteam.talktoai.ProgressVisibilityHandler
 import com.vnteam.talktoai.R
-import org.koin.androidx.compose.koinViewModel
 import com.vnteam.talktoai.getDimensionResource
 import com.vnteam.talktoai.textLinesCount
 import components.ConfirmationDialog
@@ -76,6 +75,7 @@ import domain.models.MessageApi
 import domain.sealed_classes.MessageAction
 import isDefineSecondsLater
 import kotlinx.datetime.Clock
+import org.koin.androidx.compose.koinViewModel
 import textToAction
 import theme.Neutral50
 import theme.Primary500
@@ -184,7 +184,7 @@ fun ChatScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            /*.navigationBarsWithImePadding()*/,
+        /*.navigationBarsWithImePadding()*/,
         verticalArrangement = Arrangement.Top
     ) {
         Box(modifier = Modifier.weight(1f)) {
@@ -444,11 +444,13 @@ fun Message(
             }
     ) {
 
-        Column(modifier = Modifier
-            .fillMaxHeight()
-            .width(32.dp)
-            .padding(top = 6.dp),
-            verticalArrangement = Arrangement.Top) {
+        Column(
+            modifier = Modifier
+                .fillMaxHeight()
+                .width(32.dp)
+                .padding(top = 6.dp),
+            verticalArrangement = Arrangement.Top
+        ) {
             //TODO uncomment
             /*if (isMessageDeleteModeState.value.isTrue()) {
                 AsyncImage(
@@ -503,10 +505,11 @@ fun Message(
                             .wrapContentSize()
                     )
 
-                    message.status == MessageStatus.REQUESTING && Clock.System.now().isDefineSecondsLater(
-                        20,
-                        message.updatedAt
-                    ) -> Text(
+                    message.status == MessageStatus.REQUESTING && Clock.System.now()
+                        .isDefineSecondsLater(
+                            20,
+                            message.updatedAt
+                        ) -> Text(
                         text = "Неизвестная ошибка",
                         fontSize = 16.sp,
                         color = Color.Red,

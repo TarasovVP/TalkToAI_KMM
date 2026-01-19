@@ -37,7 +37,8 @@ fun PrimaryTextField(
     placeHolder: String,
     inputValue: MutableState<TextFieldValue>,
 ) {
-    TextField(value = inputValue.value,
+    TextField(
+        value = inputValue.value,
         onValueChange = { newValue ->
             inputValue.value = newValue
         }, placeholder = { Text(text = placeHolder) },
@@ -131,7 +132,8 @@ fun TextFieldWithButton(
         if (inputValue.value.text.isEmpty()) focusManager.clearFocus()
     }
 
-    TextField(value = inputValue.value,
+    TextField(
+        value = inputValue.value,
         onValueChange = { newValue ->
             inputValue.value = newValue
         }, placeholder = { Text(text = "Enter request") },
@@ -177,9 +179,11 @@ fun TruncatableText(
     isTruncated: MutableState<Boolean>,
     linesCount: Int,
 ) {
-    Column(modifier = Modifier
-        .padding(10.dp)
-        .wrapContentSize()) {
+    Column(
+        modifier = Modifier
+            .padding(10.dp)
+            .wrapContentSize()
+    ) {
         Text(
             text = message,
             //TODO uncomment
@@ -189,7 +193,8 @@ fun TruncatableText(
             overflow = TextOverflow.Ellipsis
         )
         if (linesCount > 2) {
-            Text(text = if (isTruncated.value) "More" else "Hide",
+            Text(
+                text = if (isTruncated.value) "More" else "Hide",
                 color = Color.LightGray,
                 fontStyle = androidx.compose.ui.text.font.FontStyle.Italic,
                 fontSize = 12.sp,

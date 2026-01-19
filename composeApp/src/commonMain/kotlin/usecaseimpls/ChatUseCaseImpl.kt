@@ -9,10 +9,9 @@ import domain.repositories.MessageRepository
 import domain.usecases.ChatUseCase
 import kotlinx.coroutines.flow.Flow
 
-
 class ChatUseCaseImpl(
     private val chatRepository: ChatRepository,
-    private val messageRepository: MessageRepository
+    private val messageRepository: MessageRepository,
 ) : ChatUseCase {
 
     override suspend fun insertChat(chat: Chat) = chatRepository.insertChat(chat)
@@ -29,11 +28,13 @@ class ChatUseCaseImpl(
     }
 
 
+    override suspend fun deleteMessages(messageIds: List<Long>) =
+        messageRepository.deleteMessages(messageIds)
 
-    override suspend fun deleteMessages(messageIds: List<Long>) = messageRepository.deleteMessages(messageIds)
+    override suspend fun getMessagesFromChat(chatId: Long): Flow<List<Message>> =
+        messageRepository.getMessagesFromChat(chatId)
 
-    override suspend fun getMessagesFromChat(chatId: Long): Flow<List<Message>> = messageRepository.getMessagesFromChat(chatId)
-
-    override suspend fun sendRequest(apiRequest: ApiRequest) = messageRepository.sendRequest(apiRequest)
+    override suspend fun sendRequest(apiRequest: ApiRequest) =
+        messageRepository.sendRequest(apiRequest)
 
 }

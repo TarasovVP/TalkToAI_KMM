@@ -4,21 +4,21 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.vnteam.talktoai.base.BaseViewModel
-import mapperimpls.MessageUIMapper
-import domain.sealed_classes.Result
 import data.database.db_entities.Chat
 import domain.ApiRequest
 import domain.CommonExtensions.isNull
 import domain.enums.MessageStatus
+import domain.sealed_classes.Result
 import domain.usecases.ChatUseCase
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.catch
+import mapperimpls.MessageUIMapper
 import ui_models.MessageUIModel
 
 class ChatViewModel(
     application: Application,
     private val chatUseCase: ChatUseCase,
-    private val messageUIMapper: MessageUIMapper
+    private val messageUIMapper: MessageUIMapper,
 ) : BaseViewModel(application) {
 
     val currentChatLiveData = MutableLiveData<Chat?>()
@@ -56,7 +56,7 @@ class ChatViewModel(
             "ChatViewModel getMessagesFromChat before messagesLiveData ${messagesLiveData.value?.map { it.message }}"
         )
         messagesFlowSubscription = launch {
-           chatUseCase.getMessagesFromChat(chatId).catch {
+            chatUseCase.getMessagesFromChat(chatId).catch {
                 hideProgress()
                 Log.e(
                     "apiTAG",
@@ -71,8 +71,8 @@ class ChatViewModel(
                     "messagesTAG",
                     "ChatViewModel getMessagesFromChat after messagesLiveData ${messagesLiveData.value?.map { it.message }}"
                 )
-               messagesLiveData.postValue(messageUIMapper.mapToUIModelList(result))
-               hideProgress()
+                messagesLiveData.postValue(messageUIMapper.mapToUIModelList(result))
+                hideProgress()
             }
         }
     }
@@ -100,6 +100,7 @@ class ChatViewModel(
                             status = MessageStatus.SUCCESS
                         })
                     }
+
                     is Result.Failure -> {
                         insertMessage(temporaryMessage.apply {
                             status = MessageStatus.ERROR
@@ -123,14 +124,14 @@ class ChatViewModel(
     }
 
     fun updateMessage(message: MessageUIModel) {
-        Log.e("truncateTAG", "ChatViewModel updateMessage message $message" )
+        Log.e("truncateTAG", "ChatViewModel updateMessage message $message")
         launch {
             chatUseCase.insertMessage(messageUIMapper.mapFromUIModel(message))
         }
     }
 
     fun deleteMessages(messageIds: List<Long>) {
-        Log.e("truncateTAG", "ChatViewModel deleteMessages messageIds $messageIds" )
+        Log.e("truncateTAG", "ChatViewModel deleteMessages messageIds $messageIds")
         launch {
             chatUseCase.deleteMessages(messageIds)
         }
