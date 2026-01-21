@@ -1,5 +1,4 @@
 import platform.UIKit.UIAlertAction
-import platform.UIKit.UIAlertActionStyle
 import platform.UIKit.UIAlertActionStyleDefault
 import platform.UIKit.UIAlertController
 import platform.UIKit.UIAlertControllerStyleAlert

@@ -9,5 +9,5 @@ data class Chat(
     var id: Long = DEFAULT_CHAT_ID,
     var name: String = String.EMPTY,
     var updated: Long = 0,
-    var listOrder: Int = 0
+    var listOrder: Int = 0,
 )
