@@ -48,7 +48,7 @@ fun PrimaryTextField(
             inputValue.value = newValue
         }, placeholder = { Text(text = placeHolder) },
         colors = TextFieldDefaults.colors(
-            backgroundColor = Color.White,
+            unfocusedContainerColor = Color.White,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent
@@ -75,7 +75,11 @@ fun SecondaryTextField(
         value = inputValue.value,
         onValueChange = { inputValue.value = it },
         placeholder = { Text(text = placeHolder) },
-        colors = TextFieldDefaults.textFieldColors(backgroundColor = Color.White),
+        colors = TextFieldDefaults.colors(
+            focusedContainerColor = Color.White,
+            unfocusedContainerColor = Color.White,
+            disabledContainerColor = Color.White
+        ),
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
@@ -92,8 +96,8 @@ fun PasswordTextField(inputValue: MutableState<TextFieldValue>, placeHolder: Str
             inputValue.value = newValue
         },
         placeholder = { Text(text = placeHolder) },
-        colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = Color.White,
+        colors = TextFieldDefaults.colors(
+            unfocusedContainerColor = Color.White,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent
@@ -142,8 +146,8 @@ fun TextFieldWithButton(
         onValueChange = { newValue ->
             inputValue.value = newValue
         }, placeholder = { Text(text = "Enter request") },
-        colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = Color.White,
+        colors = TextFieldDefaults.colors(
+            unfocusedContainerColor = Color.White,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent

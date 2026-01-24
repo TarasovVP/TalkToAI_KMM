@@ -71,7 +71,7 @@ fun LazyItemScope.DraggableItem(
                 translationY = previous
             }
     } else {
-        Modifier.animateItemPlacement(
+        Modifier.animateItem(
             tween(easing = FastOutLinearInEasing)
         )
     }
