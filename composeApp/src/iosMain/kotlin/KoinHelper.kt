@@ -1,8 +1,7 @@
-import chat.ChatViewModel
 import io.ktor.utils.io.errors.IOException
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import org.koin.core.error.NoBeanDefFoundException
+import presentation.chat.ChatViewModel
 
 class KoinHelper : KoinComponent {
     private val chatViewModel: ChatViewModel by inject()
@@ -10,8 +9,7 @@ class KoinHelper : KoinComponent {
     @Throws(
         IOException::class,
         IllegalArgumentException::class,
-        IllegalStateException::class,
-        NoBeanDefFoundException::class
+        IllegalStateException::class
     )
     fun getChatViewModel(): ChatViewModel = chatViewModel
 }

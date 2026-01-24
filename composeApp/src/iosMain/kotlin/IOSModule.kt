@@ -1,9 +1,10 @@
-import chat.ChatViewModel
+
 import data.database.DatabaseDriverFactory
 import domain.usecases.ChatUseCase
 import mapperimpls.MessageUIMapper
 import mapperimpls.MessageUIMapperImpl
 import org.koin.dsl.module
+import presentation.chat.ChatViewModel
 import usecaseimpls.ChatUseCaseImpl
 
 val iosModule = module {

@@ -1,7 +1,8 @@
-package di_android
+package com.vnteam.talktoai
 
 import android.app.Application
 import di.appModule
+import di_android.androidModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -9,7 +10,7 @@ import org.koin.core.context.startKoin
 fun doInitKoin(application: Application) = startKoin {
     androidLogger()
     androidContext(application)
-    modules(appModule + androidModule)
+    modules(appModule + androidModule + androidComposeModule)
     properties(
         mapOf(
             "OPENAI_API_KEY" to "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",

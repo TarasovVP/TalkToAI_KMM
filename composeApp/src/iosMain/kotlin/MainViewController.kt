@@ -1,7 +1,7 @@
 import androidx.compose.ui.window.ComposeUIViewController
-import chat.ChatScreen
-import chat.ChatViewModel
 import platform.UIKit.UIViewController
+import presentation.chat.ChatScreen
+import presentation.chat.ChatViewModel
 
 fun MainViewController(viewModel: ChatViewModel?): UIViewController {
 

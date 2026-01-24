@@ -24,8 +24,8 @@ import com.vnteam.talktoai.ic_tab_one
 import com.vnteam.talktoai.ic_tab_three
 import com.vnteam.talktoai.ic_tab_two
 import com.vnteam.talktoai.onboarding_intro
-import com.vnteam.talktoai.stringRes
 import components.PrimaryButton
+import components.stringRes
 import domain.models.ScreenState
 import domain.sealed_classes.NavigationScreen
 import org.jetbrains.compose.resources.painterResource

@@ -13,8 +13,8 @@ import kotlinx.coroutines.withContext
 
 open class BaseViewModel() : ViewModel() {
 
-    val exceptionLiveData = MutableStateFlow<String>("")
-    val progressVisibilityLiveData = MutableStateFlow<Boolean>(false)
+    val exceptionLiveData = MutableStateFlow<String?>(null)
+    val progressVisibilityLiveData = MutableStateFlow(false)
 
     fun showProgress() {
         progressVisibilityLiveData.value = true

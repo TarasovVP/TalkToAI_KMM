@@ -25,10 +25,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import domain.Constants.ERROR_MESSAGE
@@ -38,7 +36,6 @@ import resources.StringResources
 import resources.getStringResourcesByLocale
 import theme.Primary300
 import theme.Primary700
-import kotlin.math.ceil
 
 
 @Composable
@@ -121,11 +118,11 @@ fun EmptyState(text: String, icon: Painter, modifier: Modifier) {
 @Composable
 fun ExceptionMessageHandler(
     messageState: MutableState<InfoMessage?>,
-    exceptionStateFlow: MutableStateFlow<String>,
+    exceptionStateFlow: MutableStateFlow<String?>,
 ) {
     val exceptionState = exceptionStateFlow.collectAsState()
     LaunchedEffect(exceptionState.value) {
-        exceptionState.value.takeIf { exceptionState.value.isNotEmpty() }?.let {
+        exceptionState.value.takeIf { exceptionState.value.isNullOrEmpty().not() }?.let {
             messageState.value = InfoMessage(
                 exceptionState.value.orEmpty(),
                 ERROR_MESSAGE
@@ -144,9 +141,6 @@ fun ProgressVisibilityHandler(
     LaunchedEffect(progressProcessState.value) {
         progressVisibilityState.value = progressProcessState.value
     }
-    println(
-        "progressTAG Common ProgressVisibilityHandler progressVisibilityState ${progressVisibilityState.value} progressVisibilityLiveData ${progressVisibilityStateFlow.value}"
-    )
 }
 
 @Composable
@@ -174,42 +168,6 @@ fun MainProgress(progressVisibilityState: MutableState<Boolean>) {
             )
         }*/
     }
-}
-
-@Composable
-fun textLinesCount(text: String, paddings: Float, textSize: Float): Int {
-    val charsInLine = charsInLine(paddings, textSize)
-    return charsInLine.takeIf { it > 0 }?.let { ceil((text.length / it).toDouble()).toInt() } ?: 1
-}
-
-@Composable
-fun charsInLine(paddings: Float, textSize: Float): Float {
-    val screenWidth = measureScreenWidth() - paddings
-    val charWidth = measureCharWidth(textSize)
-    return charWidth.takeIf { it > 0 }?.let { screenWidth / it } ?: 0f
-}
-
-@Composable
-fun measureScreenWidth(): Float {
-    val screenWidthDp = LocalConfiguration.current.screenWidthDp.dp
-    return screenWidthDp.value
-}
-
-@Composable
-fun measureCharWidth(textSize: Float): Float {
-    val density = LocalDensity.current.density
-    val textPaint = TextPaint().apply {
-        this.textSize = textSize * density
-    }
-    return textPaint.measureText(" ")
-}
-
-@Composable
-fun getDimensionResource(resId: Int): Dp {
-    val resources = LocalContext.current.resources
-    val density = LocalDensity.current.density
-    val sizeInPixels = resources.getDimension(resId)
-    return (sizeInPixels / density).dp
 }
 
 @Composable

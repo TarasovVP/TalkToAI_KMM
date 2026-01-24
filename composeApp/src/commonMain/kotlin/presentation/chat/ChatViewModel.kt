@@ -9,6 +9,7 @@ import domain.sealed_classes.Result
 import domain.usecases.ChatUseCase
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import mapperimpls.MessageUIMapper
 import ui_models.MessageUIModel
@@ -18,8 +19,10 @@ class ChatViewModel(
     private val messageUIMapper: MessageUIMapper,
 ) : BaseViewModel() {
 
-    val currentChatLiveData = MutableStateFlow<Chat?>(Chat())
-    val messagesLiveData = MutableStateFlow<List<MessageUIModel>>(emptyList())
+    private val _currentChatStateFlow = MutableStateFlow<Chat?>(Chat())
+    val currentChatStateFlow = _currentChatStateFlow.asStateFlow()
+    private val _messagesStateFlow = MutableStateFlow<List<MessageUIModel>>(emptyList())
+    val messagesStateFlow = _messagesStateFlow.asStateFlow()
 
     private var messagesFlowSubscription: Job? = null
 
@@ -36,9 +39,9 @@ class ChatViewModel(
                 hideProgress()
             }.collect { chat ->
                 if (chat.isNull()) {
-                    currentChatLiveData.value = Chat()
+                    _currentChatStateFlow.value = Chat()
                 } else {
-                    currentChatLiveData.value = chat
+                    _currentChatStateFlow.value = chat
                 }
                 hideProgress()
             }
@@ -49,7 +52,7 @@ class ChatViewModel(
         showProgress()
         messagesFlowSubscription?.cancel()
         println(
-            "messagesTAG ChatViewModel getMessagesFromChat before messagesLiveData ${messagesLiveData.value.map { it.message }}"
+            "messagesTAG ChatViewModel getMessagesFromChat before messagesLiveData ${messagesStateFlow.value.map { it.message }}"
         )
         messagesFlowSubscription = launch {
             chatUseCase.getMessagesFromChat(chatId).catch {
@@ -62,9 +65,9 @@ class ChatViewModel(
                     "apiTAG ChatViewModel getMessagesFromChat collect result.size ${result.size} chatId $chatId isProgressProcessLiveData ${progressVisibilityLiveData.value}"
                 )
                 println(
-                    "messagesTAG ChatViewModel getMessagesFromChat after messagesLiveData ${messagesLiveData.value?.map { it.message }}"
+                    "messagesTAG ChatViewModel getMessagesFromChat after messagesLiveData ${messagesStateFlow.value?.map { it.message }}"
                 )
-                messagesLiveData.value = messageUIMapper.mapToUIModelList(result)
+                _messagesStateFlow.value = messageUIMapper.mapToUIModelList(result)
                 hideProgress()
             }
         }
@@ -72,7 +75,7 @@ class ChatViewModel(
 
     fun sendRequest(temporaryMessage: MessageUIModel, apiRequest: ApiRequest) {
         println(
-            "messagesTAG ChatViewModel sendRequest messagesLiveData ${messagesLiveData.value?.map { it.message }}"
+            "messagesTAG ChatViewModel sendRequest messagesLiveData ${messagesStateFlow.value?.map { it.message }}"
         )
         showProgress()
         launch {

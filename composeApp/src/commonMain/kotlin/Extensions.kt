@@ -1,8 +1,6 @@
-import kotlinx.datetime.Instant
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.plus
-import kotlinx.datetime.toLocalDateTime
 import ui_models.MessageUIModel
+import kotlin.time.Duration.Companion.seconds
+import kotlin.time.Instant
 
 fun List<MessageUIModel>?.clearCheckToAction() {
     this?.forEach { message ->
@@ -19,23 +17,9 @@ fun Instant.dateToMilliseconds(): Long {
     return toEpochMilliseconds() / 1000
 }
 
-fun Long.millsSecondsToDateTime(): String {
-    val instant = Instant.fromEpochMilliseconds(this)
-    val localDateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
-    return "${
-        localDateTime.dayOfMonth.toString().padStart(2, '0')
-    }-${
-        localDateTime.monthNumber.toString().padStart(2, '0')
-    }-${localDateTime.year}, ${
-        localDateTime.hour.toString().padStart(2, '0')
-    }:${localDateTime.minute.toString().padStart(2, '0')}:${
-        localDateTime.second.toString().padStart(2, '0')
-    }"
-}
-
-fun Instant.isDefineSecondsLater(seconds: Int, updated: Long): Boolean {
-    val targetTime = this.plus(seconds, kotlinx.datetime.DateTimeUnit.SECOND, TimeZone.UTC)
-    val updatedTime = Instant.fromEpochSeconds(updated)
+fun Instant.isDefineSecondsLater(seconds: Int, updatedSeconds: Long): Boolean {
+    val targetTime = this + seconds.seconds
+    val updatedTime = Instant.fromEpochSeconds(updatedSeconds)
     return targetTime < updatedTime
 }
 
