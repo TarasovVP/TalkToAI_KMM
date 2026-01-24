@@ -1,4 +1,4 @@
-package com.vnteam.talktoai.onboarding
+package presentation.onboarding
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -29,8 +29,7 @@ import components.PrimaryButton
 import domain.models.ScreenState
 import domain.sealed_classes.NavigationScreen
 import org.jetbrains.compose.resources.painterResource
-import org.koin.androidx.compose.koinViewModel
-import resources.DrawableResources
+import org.koin.compose.viewmodel.koinViewModel
 import theme.Neutral50
 import theme.Primary500
 
@@ -41,11 +40,11 @@ fun OnboardingContent(screenState: ScreenState) {
     val pageState = remember {
         mutableIntStateOf(0)
     }
-    val onBoardingSeenState = viewModel.onBoardingSeenLiveData.collectAsState()
+    val onBoardingSeenState = viewModel.onBoardingSeenStateFlow.collectAsState()
     LaunchedEffect(onBoardingSeenState.value) {
         if (onBoardingSeenState.value) {
             screenState.currentScreenState.value = NavigationScreen.LoginScreen().route
-            viewModel.onBoardingSeenLiveData.value = false
+            viewModel.onBoardingSeenStateFlow.value = false
         }
     }
     OnboardingPage(pageState.value) {

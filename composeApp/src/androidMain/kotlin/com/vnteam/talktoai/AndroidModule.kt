@@ -5,22 +5,21 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
-import com.vnteam.talktoai.chat.ChatViewModel
-import com.vnteam.talktoai.onboarding.OnBoardingViewModel
+import presentation.chat.ChatViewModel
+import presentation.onboarding.OnBoardingViewModel
 import data.database.DatabaseDriverFactory
 import domain.repositories.DataStoreRepository
 import domain.usecases.ChatUseCase
 import domain.usecases.OnBoardingUseCase
 import mapperimpls.MessageUIMapper
 import mapperimpls.MessageUIMapperImpl
-import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
-import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 import usecaseimpls.ChatUseCaseImpl
 import usecaseimpls.OnBoardingUseCaseImpl
 
-val androidModule = module {
+val androidComposeModule = module {
     single {
         DatabaseDriverFactory(androidContext())
     }
@@ -51,13 +50,11 @@ val androidModule = module {
     }
     viewModel {
         OnBoardingViewModel(
-            application = androidApplication(),
             onBoardingUseCase = get()
         )
     }
     viewModel {
         ChatViewModel(
-            application = androidApplication(),
             chatUseCase = get(),
             messageUIMapper = get()
         )

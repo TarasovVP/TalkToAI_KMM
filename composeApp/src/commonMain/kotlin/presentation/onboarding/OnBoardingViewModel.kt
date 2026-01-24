@@ -1,21 +1,19 @@
-package com.vnteam.talktoai.onboarding
+package presentation.onboarding
 
-import android.app.Application
-import com.vnteam.talktoai.base.BaseViewModel
+import presentation.base.BaseViewModel
 import domain.usecases.OnBoardingUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class OnBoardingViewModel(
-    application: Application,
     private val onBoardingUseCase: OnBoardingUseCase,
-) : BaseViewModel(application) {
+) : BaseViewModel() {
 
-    val onBoardingSeenLiveData = MutableStateFlow(false)
+    val onBoardingSeenStateFlow = MutableStateFlow(false)
 
     fun setOnBoardingSeen() {
         launch {
             onBoardingUseCase.setOnBoardingSeen(true)
-            onBoardingSeenLiveData.value = true
+            onBoardingSeenStateFlow.value = true
         }
     }
 }

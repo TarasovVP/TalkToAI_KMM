@@ -7,7 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import com.vnteam.talktoai.onboarding.OnboardingContent
+import presentation.onboarding.OnboardingContent
 import domain.models.ScreenState
 import org.koin.android.ext.android.inject
 

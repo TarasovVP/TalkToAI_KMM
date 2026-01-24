@@ -1,7 +1,6 @@
-package com.vnteam.talktoai.chat
+package presentation.chat
 
 import android.content.Intent
-import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -32,33 +31,35 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.key.Key.Companion.R
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import clearCheckToAction
-import com.vnteam.talktoai.ExceptionMessageHandler
-import com.vnteam.talktoai.ProgressVisibilityHandler
-import com.vnteam.talktoai.R
 import com.vnteam.talktoai.Res
+import com.vnteam.talktoai.empty_state
 import com.vnteam.talktoai.getDimensionResource
 import com.vnteam.talktoai.ic_chat_add
+import com.vnteam.talktoai.ic_copy
+import com.vnteam.talktoai.ic_delete
+import com.vnteam.talktoai.ic_share
 import com.vnteam.talktoai.textLinesCount
 import components.ConfirmationDialog
 import components.DataEditDialog
 import components.EmptyState
+import components.ExceptionMessageHandler
+import components.ProgressVisibilityHandler
 import components.TextFieldWithButton
 import components.TextIconButton
 import components.TruncatableText
@@ -77,7 +78,8 @@ import domain.sealed_classes.MessageAction
 import isDefineSecondsLater
 import kotlinx.datetime.Clock
 import org.jetbrains.compose.resources.painterResource
-import org.koin.androidx.compose.koinViewModel
+import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
 import textToAction
 import theme.Neutral50
 import theme.Primary500
@@ -95,18 +97,17 @@ fun ChatScreen(
 ) {
     val viewModel: ChatViewModel = koinViewModel()
     val showCreateChatDialog: MutableState<Boolean> = remember { mutableStateOf(false) }
-    val currentChatState = viewModel.currentChatLiveData.observeAsState()
-    val messagesState = viewModel.messagesLiveData.observeAsState()
+    val currentChatState = viewModel.currentChatLiveData.collectAsStateWithLifecycle()
+    val messagesState = viewModel.messagesLiveData.collectAsStateWithLifecycle()
     val messageActionState: MutableState<String> =
         rememberSaveable { mutableStateOf(MessageAction.Cancel().value) }
     val showMessageActionDialog: MutableState<Boolean> = rememberSaveable { mutableStateOf(false) }
-    Log.e(
-        "apiTAG",
-        "ChatScreen showMessageActionDialog ${showMessageActionDialog.value} messageActionState ${messageActionState.value}"
+    println(
+        "apiTAG ChatScreen showMessageActionDialog ${showMessageActionDialog.value} messageActionState ${messageActionState.value}"
     )
 
     LaunchedEffect(Unit) {
-        Log.e("apiTAG", "ChatScreen getCurrentChat currentChatId $currentChatId")
+        println("apiTAG ChatScreen getCurrentChat currentChatId $currentChatId")
         viewModel.getCurrentChat(currentChatId)
     }
 
@@ -125,7 +126,7 @@ fun ChatScreen(
     val shareIntentLauncher =
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { _ ->
             infoMessageState.value = InfoMessage("Отправлено")
-            Log.e(
+            println(
                 "apiTAG",
                 "ChatScreen MessageDeleteField onShareClick shareIntentLauncher onComplete"
             )
@@ -133,14 +134,12 @@ fun ChatScreen(
     LaunchedEffect(messageActionState.value) {
         when (messageActionState.value) {
             MessageAction.Delete().value -> {
-                Log.e(
-                    "apiTAG",
-                    "ChatScreen is MessageAction.Delete before showMessageActionDialog ${showMessageActionDialog.value}"
+                println(
+                    "apiTAG ChatScreen is MessageAction.Delete before showMessageActionDialog ${showMessageActionDialog.value}"
                 )
                 showMessageActionDialog.value = true
-                Log.e(
-                    "apiTAG",
-                    "ChatScreen is MessageAction.Delete after showMessageActionDialog ${showMessageActionDialog.value}"
+                println(
+                    "apiTAG ChatScreen is MessageAction.Delete after showMessageActionDialog ${showMessageActionDialog.value}"
                 )
             }
 
@@ -198,7 +197,7 @@ fun ChatScreen(
                     viewModel.updateMessage(message)
                 }
             }
-            Log.e("apiTAG", "ChatScreen Column currentChatState.value ${currentChatState.value}")
+            println("apiTAG ChatScreen Column currentChatState.value ${currentChatState.value}")
         }
         Box(
             modifier = Modifier
@@ -344,7 +343,7 @@ fun MessagesList(
     if (messages.isEmpty()) {
         EmptyState(
             text = "Введите свой вопрос или воспользуйтесь микрофоном....",
-            painterResource(id = R.drawable.empty_state),
+            painterResource(Res.drawable.empty_state),
             modifier = Modifier
                 .fillMaxSize()
                 .padding(45.dp)
@@ -386,16 +385,14 @@ fun Message(
     onMessageChange: (MessageUIModel) -> Unit = {},
 ) {
     val isTruncatedState = rememberSaveable { mutableStateOf(message.isTruncated) }
-    Log.e(
-        "truncateTAG",
-        "ChatComposable Message before LaunchedEffect message.message ${
+    println(
+        "truncateTAG ChatComposable Message before LaunchedEffect message.message ${
             message.message.takeIf { it.length > 6 }?.substring(0, 6)
         } message.isTruncated ${message.isTruncated} isTruncatedState.value ${isTruncatedState.value}"
     )
     LaunchedEffect(isTruncatedState.value) {
-        Log.e(
-            "truncateTAG",
-            "ChatComposable Message LaunchedEffect(isTruncatedState.value) message.message ${
+        println(
+            "truncateTAG ChatComposable Message LaunchedEffect(isTruncatedState.value) message.message ${
                 message.message.takeIf { it.length > 6 }?.substring(0, 6)
             } message.isTruncated ${message.isTruncated} isTruncatedState.value ${isTruncatedState.value}"
         )
@@ -415,9 +412,8 @@ fun Message(
         paddings,
         getDimensionResource(resId = R.dimen.default_text_size).value
     )
-    Log.e(
-        "charWidthTAG",
-        "ChatComposable: message.message ${
+    println(
+        "charWidthTAG ChatComposable: message.message ${
             message.message.takeIf { it.length > 6 }?.substring(0, 6)
         } message.length ${message.message.length}"
     )
@@ -558,24 +554,24 @@ fun MessageActionField(
             .height(TextFieldDefaults.MinHeight)
     ) {
         TextButton(onClick = { messageActionState.value = MessageAction.Cancel().value }) {
-            Text(text = stringResource(id = R.string.button_cancel), color = Neutral50)
+            Text(text = stringResource(R.string.button_cancel), color = Neutral50)
         }
         Spacer(modifier = Modifier.weight(1f))
         IconButton(onClick = { messageActionState.value = MessageAction.Copy().value }) {
             Image(
-                painter = painterResource(id = R.drawable.ic_copy),
+                painter = painterResource(Res.drawable.ic_copy),
                 contentDescription = "Message copy button"
             )
         }
         IconButton(onClick = { messageActionState.value = MessageAction.Delete().value }) {
             Image(
-                painter = painterResource(id = R.drawable.ic_delete),
+                painter = painterResource(Res.drawable.ic_delete),
                 contentDescription = "Message delete button"
             )
         }
         IconButton(onClick = { messageActionState.value = MessageAction.Share().value }) {
             Image(
-                painter = painterResource(id = R.drawable.ic_share),
+                painter = painterResource(Res.drawable.ic_share),
                 contentDescription = "Message share button"
             )
         }
