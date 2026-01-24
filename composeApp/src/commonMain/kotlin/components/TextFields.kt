@@ -27,7 +27,12 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.vnteam.talktoai.Res
+import com.vnteam.talktoai.ic_message_send
+import com.vnteam.talktoai.ic_toggle_password_disabled
+import com.vnteam.talktoai.ic_toggle_password_enabled
 import domain.CommonExtensions.EMPTY
+import org.jetbrains.compose.resources.painterResource
 import theme.Neutral600
 import theme.Primary500
 import theme.Primary900
@@ -109,7 +114,7 @@ fun PasswordTextField(inputValue: MutableState<TextFieldValue>, placeHolder: Str
                 onClick = { passwordVisible.value = passwordVisible.value.not() }
             ) {
                 Icon(
-                    painter = painterRes(if (passwordVisible.value) "ic_toggle_password_enabled" else "ic_toggle_password_disabled"),
+                    painter = painterResource(if (passwordVisible.value) Res.drawable.ic_toggle_password_enabled else Res.drawable.ic_toggle_password_disabled),
                     contentDescription = if (passwordVisible.value) "Hide password" else "Show password"
                 )
             }
@@ -164,7 +169,7 @@ fun TextFieldWithButton(
                 inputValue.value = TextFieldValue(String.EMPTY)
             }) {
                 Icon(
-                    painter = painterRes("ic_message_send"),
+                    painter = painterResource(Res.drawable.ic_message_send),
                     contentDescription = "Send message button",
                     tint = if (isEnabled) Primary900 else Neutral600
                 )

@@ -46,7 +46,6 @@ import components.TextFieldWithButton
 import components.TextIconButton
 import components.TruncatableText
 import components.draggable.UpdateViewConfiguration
-import components.painterRes
 import data.database.db_entities.Chat
 import dateToMilliseconds
 import domain.ApiRequest

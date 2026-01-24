@@ -25,8 +25,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.painterResource
 import theme.Primary300
 import theme.Primary700
 
@@ -106,10 +104,4 @@ fun EmptyState(text: String, icon: Painter, modifier: Modifier) {
                 .padding(top = 16.dp)
         )
     }
-}
-
-@OptIn(ExperimentalResourceApi::class)
-@Composable
-fun painterRes(resId: String): Painter {
-    return painterResource("drawable/${resId}.xml")
 }

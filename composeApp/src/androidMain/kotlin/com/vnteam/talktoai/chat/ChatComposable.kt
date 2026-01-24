@@ -52,7 +52,9 @@ import clearCheckToAction
 import com.vnteam.talktoai.ExceptionMessageHandler
 import com.vnteam.talktoai.ProgressVisibilityHandler
 import com.vnteam.talktoai.R
+import com.vnteam.talktoai.Res
 import com.vnteam.talktoai.getDimensionResource
+import com.vnteam.talktoai.ic_chat_add
 import com.vnteam.talktoai.textLinesCount
 import components.ConfirmationDialog
 import components.DataEditDialog
@@ -61,7 +63,6 @@ import components.TextFieldWithButton
 import components.TextIconButton
 import components.TruncatableText
 import components.draggable.UpdateViewConfiguration
-import components.painterRes
 import data.database.db_entities.Chat
 import dateToMilliseconds
 import domain.ApiRequest
@@ -75,6 +76,7 @@ import domain.models.MessageApi
 import domain.sealed_classes.MessageAction
 import isDefineSecondsLater
 import kotlinx.datetime.Clock
+import org.jetbrains.compose.resources.painterResource
 import org.koin.androidx.compose.koinViewModel
 import textToAction
 import theme.Neutral50
@@ -539,7 +541,7 @@ fun CreateChatScreen(onClick: () -> Unit) {
     ) {
         TextIconButton(
             "Новый чат",
-            painterRes("ic_chat_add.xml"),
+            painterResource(Res.drawable.ic_chat_add),
             Modifier,
             onClick
         )

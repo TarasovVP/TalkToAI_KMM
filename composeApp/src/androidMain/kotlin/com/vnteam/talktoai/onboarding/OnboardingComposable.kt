@@ -18,11 +18,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.vnteam.talktoai.Res
+import com.vnteam.talktoai.ic_tab_four
+import com.vnteam.talktoai.ic_tab_one
+import com.vnteam.talktoai.ic_tab_three
+import com.vnteam.talktoai.ic_tab_two
+import com.vnteam.talktoai.onboarding_intro
 import com.vnteam.talktoai.stringRes
 import components.PrimaryButton
-import components.painterRes
 import domain.models.ScreenState
 import domain.sealed_classes.NavigationScreen
+import org.jetbrains.compose.resources.painterResource
 import org.koin.androidx.compose.koinViewModel
 import resources.DrawableResources
 import theme.Neutral50
@@ -80,7 +86,7 @@ fun OnboardingPage(page: Int, onClick: () -> Unit) {
             )
         }
         Image(
-            painter = painterRes(DrawableResources.ONBOARDING_INTRO),
+            painter = painterResource(Res.drawable.onboarding_intro),
             contentDescription = stringRes().ONBOARDING_ICON,
             modifier = Modifier
                 .fillMaxWidth()
@@ -88,12 +94,12 @@ fun OnboardingPage(page: Int, onClick: () -> Unit) {
                 .padding(top = 16.dp)
         )
         Image(
-            painter = painterRes(
+            painter = painterResource(
                 when (page) {
-                    1 -> DrawableResources.IC_TAB_TWO
-                    2 -> DrawableResources.IC_TAB_THREE
-                    3 -> DrawableResources.IC_TAB_FOUR
-                    else -> DrawableResources.IC_TAB_ONE
+                    1 -> Res.drawable.ic_tab_one
+                    2 -> Res.drawable.ic_tab_two
+                    3 -> Res.drawable.ic_tab_three
+                    else -> Res.drawable.ic_tab_four
                 }
             ), contentDescription = "${stringRes().ONBOARDING_SCREEN} $page", modifier = Modifier
                 .fillMaxWidth()

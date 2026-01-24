@@ -40,6 +40,12 @@ import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import clearCheckToAction
+import com.vnteam.talktoai.Res
+import com.vnteam.talktoai.empty_state
+import com.vnteam.talktoai.ic_chat_add
+import com.vnteam.talktoai.ic_copy
+import com.vnteam.talktoai.ic_delete
+import com.vnteam.talktoai.ic_share
 import components.ConfirmationDialog
 import components.DataEditDialog
 import components.EmptyState
@@ -47,7 +53,6 @@ import components.TextFieldWithButton
 import components.TextIconButton
 import components.TruncatableText
 import components.draggable.UpdateViewConfiguration
-import components.painterRes
 import data.database.db_entities.Chat
 import dateToMilliseconds
 import domain.ApiRequest
@@ -62,6 +67,7 @@ import domain.sealed_classes.MessageAction
 import isDefineSecondsLater
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.datetime.Clock
+import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject
 import resources.LocalAvatarSize
 import resources.LocalDefaultTextSize
@@ -320,7 +326,7 @@ fun MessagesList(
     if (messages.isEmpty()) {
         EmptyState(
             text = "Введите свой вопрос или воспользуйтесь микрофоном....",
-            icon = painterRes("empty_state"),
+            icon = painterResource(Res.drawable.empty_state),
             modifier = Modifier
                 .fillMaxSize()
                 .padding(45.dp)
@@ -498,7 +504,7 @@ fun CreateChatScreen(onClick: () -> Unit) {
     ) {
         TextIconButton(
             "Новый чат",
-            painterRes("ic_chat_add"),
+            painterResource(Res.drawable.ic_chat_add),
             Modifier,
             onClick
         )
@@ -521,19 +527,19 @@ fun MessageActionField(
         Spacer(modifier = Modifier.weight(1f))
         IconButton(onClick = { messageActionState.value = MessageAction.Copy().value }) {
             Image(
-                painter = painterRes("ic_copy"),
+                painterResource(Res.drawable.ic_copy),
                 contentDescription = "Message copy button"
             )
         }
         IconButton(onClick = { messageActionState.value = MessageAction.Delete().value }) {
             Image(
-                painter = painterRes("ic_delete"),
+                painterResource(Res.drawable.ic_delete),
                 contentDescription = "Message delete button"
             )
         }
         IconButton(onClick = { messageActionState.value = MessageAction.Share().value }) {
             Image(
-                painter = painterRes("ic_share"),
+                painterResource(Res.drawable.ic_share),
                 contentDescription = "Message share button"
             )
         }
