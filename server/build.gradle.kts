@@ -17,7 +17,6 @@ application {
 dependencies {
     implementation(libs.logback)
     implementation(libs.kotlinx.serialization.json)
-    testImplementation(libs.ktor.server.tests)
     // Koin
     implementation(libs.koin.core)
     implementation(libs.koin.ktor)
